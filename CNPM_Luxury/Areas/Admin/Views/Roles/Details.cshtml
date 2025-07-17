@@ -1,0 +1,74 @@
+﻿@model CNPM_Luxury.Model.Role
+
+@{
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Chi tiết vai trò</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding-top: 40px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .detail-container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 12px rgba(0,0,0,0.1);
+        }
+
+        .detail-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .value {
+            padding-top: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container detail-container">
+        <h3 class="detail-title">Chi tiết vai trò</h3>
+
+        <div class="form-group">
+            <label class="label">Mã vai trò</label>
+            <div class="value">
+                @Html.DisplayFor(model => model.ID_Role)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="label">Tên vai trò</label>
+            <div class="value">
+                @Html.DisplayFor(model => model.TEN_ROLE)
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="text-center">
+            @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.ID_Role }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-default", style = "margin-left:10px;" })
+        </div>
+    </div>
+</body>
+</html>

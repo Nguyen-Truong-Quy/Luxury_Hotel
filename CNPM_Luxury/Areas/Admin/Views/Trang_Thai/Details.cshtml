@@ -1,0 +1,24 @@
+﻿@model CNPM_Luxury.Model.Trang_Thai
+
+@{
+    ViewBag.Title = "Chi tiết trạng thái";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-info text-white">
+            <h4 class="mb-0">Chi tiết trạng thái</h4>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">Tên trạng thái</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Ten_Trang_Thai)</dd>
+            </dl>
+            <div class="mt-3">
+                @Html.ActionLink("Sửa", "Edit", new { id = Model.ID_Trang_Thai }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-secondary ml-2" })
+            </div>
+        </div>
+    </div>
+</div>

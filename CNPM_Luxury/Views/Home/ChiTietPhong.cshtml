@@ -1,0 +1,14 @@
+﻿@model CNPM_Luxury.Models.PhongModels
+<h2>Chi tiết phòng</h2>
+
+<link rel="stylesheet" href="~/Content/phong.css" />
+
+<div class="room-detail">
+    <img src="@Url.Content(Model.HinhAnh)" class="room-detail-img" />
+    <div class="room-info">
+        <h2>@Model.TenPhong</h2>
+        <p>@Model.MoTa</p>
+        <p><strong>Giá:</strong> @string.Format("{0:N0}", Model.Gia) VNĐ</p>
+        <button class="btn-datphong">Đặt phòng</button>
+    </div>
+</div>

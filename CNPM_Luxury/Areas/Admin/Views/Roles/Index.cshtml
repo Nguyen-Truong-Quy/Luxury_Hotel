@@ -1,0 +1,41 @@
+﻿@model IEnumerable<CNPM_Luxury.Model.Role>
+
+@{
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+    int stt = 1; // Biến đếm số thứ tự
+}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Danh sách vai trò</h2>
+        @Html.ActionLink("Tạo vai trò mới", "Create", null, new { @class = "btn btn-success" })
+    </div>
+
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>STT</th>
+                <th>@Html.DisplayNameFor(model => model.First().TEN_ROLE)</th>
+                <th style="width: 200px">Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@stt</td>
+                    <td>@Html.DisplayFor(modelItem => item.TEN_ROLE)</td>
+                    <td>
+                        @Html.ActionLink("Sửa", "Edit", new { id = item.ID_Role }, new { @class = "btn btn-sm btn-warning mr-1" })
+                        @Html.ActionLink("Chi tiết", "Details", new { id = item.ID_Role }, new { @class = "btn btn-sm btn-info mr-1" })
+                        @Html.ActionLink("Xóa", "Delete", new { id = item.ID_Role }, new { @class = "btn btn-sm btn-danger" })
+                    </td>
+                </tr>
+                stt++; // Tăng số thứ tự
+            }
+        </tbody>
+    </table>
+</div>

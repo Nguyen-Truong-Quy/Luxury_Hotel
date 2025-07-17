@@ -1,0 +1,82 @@
+﻿@model CNPM_Luxury.Model.Room
+
+@{
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>Room</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Ten_Phong)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Ten_Phong)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Mo_Ta)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Mo_Ta)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Gia_Phong)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Gia_Phong)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Dia_Diem)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Dia_Diem)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.So_Nguoi)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.So_Nguoi)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Anh_Phong)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Anh_Phong)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Trang_Thai.Ten_Trang_Thai)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Trang_Thai.Ten_Trang_Thai)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Ma_Phong }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

@@ -1,0 +1,73 @@
+﻿@model CNPM_Luxury.Model.TienIch
+
+@{
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+
+    <style>
+        body {
+            background-color: #e9f4fb;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border: none;
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+            .btn-primary:hover {
+                background-color: #0069d9;
+                border-color: #0062cc;
+            }
+
+        .form-label i {
+            margin-right: 6px;
+        }
+    </style>
+
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4><i class="fas fa-plus-circle"></i> Thêm tiện ích mới</h4>
+                    </div>
+                    <div class="card-body">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+                            <div class="form-group">
+                                <label class="form-label" for="TenTienIch">
+                                    <i class="fas fa-puzzle-piece"></i> Tên tiện ích
+                                </label>
+                                @Html.EditorFor(model => model.TenTienIch, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập tên tiện ích..." } })
+                                @Html.ValidationMessageFor(model => model.TenTienIch, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group text-right">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> Lưu
+                                </button>
+                                @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-secondary ml-2" })
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+

@@ -1,0 +1,16 @@
+﻿@model List<CNPM_Luxury.Models.PhongModels>
+<h2 style="text-align:center">Danh sách phòng đang có</h2>
+
+<link rel="stylesheet" href="~/Content/phong.css" />
+
+<div class="room-container">
+    @foreach (var phong in Model)
+    {
+        <div class="room-card">
+            <img src="@Url.Content(phong.HinhAnh)" alt="@phong.TenPhong" class="room-image" />
+            <h3>@phong.TenPhong</h3>
+            <p>Giá: @string.Format("{0:N0}", phong.Gia) VNĐ</p>
+            <a href="@Url.Action("ChiTietPhong", "Phong", new { id = phong.Id })" class="btn-detail">Xem chi tiết</a>
+        </div>
+    }
+</div>

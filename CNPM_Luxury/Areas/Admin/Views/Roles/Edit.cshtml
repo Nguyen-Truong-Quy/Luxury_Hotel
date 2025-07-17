@@ -1,0 +1,68 @@
+﻿@model CNPM_Luxury.Model.Role
+
+@{
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Chỉnh sửa vai trò</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #f4f6f9;
+            font-family: 'Segoe UI', sans-serif;
+            padding-top: 40px;
+        }
+
+        .edit-container {
+            max-width: 700px;
+            margin: auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        .edit-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #007bff;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+
+        .btn-default {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container edit-container">
+        <h3 class="edit-title">Chỉnh sửa vai trò</h3>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.ID_Role)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TEN_ROLE, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.TEN_ROLE, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập tên vai trò" } })
+                @Html.ValidationMessageFor(model => model.TEN_ROLE, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group text-center">
+                <input type="submit" value="Lưu thay đổi" class="btn btn-primary" />
+                @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-default" })
+            </div>
+        }
+    </div>
+</body>
+</html>

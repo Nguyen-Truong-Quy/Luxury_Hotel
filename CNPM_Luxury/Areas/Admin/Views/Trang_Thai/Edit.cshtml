@@ -1,0 +1,30 @@
+﻿@model CNPM_Luxury.Model.Trang_Thai
+
+@{
+    ViewBag.Title = "Chỉnh sửa trạng thái";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-warning text-white">
+            <h4 class="mb-0">Chỉnh sửa trạng thái</h4>
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.ID_Trang_Thai)
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Ten_Trang_Thai, htmlAttributes: new { @class = "font-weight-bold" })
+                    @Html.EditorFor(m => m.Ten_Trang_Thai, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập tên trạng thái" } })
+                    @Html.ValidationMessageFor(m => m.Ten_Trang_Thai, "", new { @class = "text-danger" })
+                </div>
+
+                <button type="submit" class="btn btn-success">Lưu</button>
+                @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-secondary ml-2" })
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="30cb73df3d7d43c58bed3c245ff6f995" Name="Diagram1">
+        <EntityTypeShape EntityType="Luxury_HotelModel.BaoCaoTinhTrang" Width="1.5" PointX="3" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Luxury_HotelModel.Booking" Width="1.5" PointX="6" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="Luxury_HotelModel.ChiTietHoaDon" Width="1.5" PointX="13.5" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Luxury_HotelModel.DanhGia" Width="1.5" PointX="8.25" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Luxury_HotelModel.DichVuPhuThu" Width="1.5" PointX="3" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Luxury_HotelModel.Role" Width="1.5" PointX="1.5" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="Luxury_HotelModel.Room" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Luxury_HotelModel.ThanhToan" Width="1.5" PointX="11.25" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Luxury_HotelModel.TienIch" Width="1.5" PointX="0.75" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="Luxury_HotelModel.Trang_Thai" Width="1.5" PointX="0.75" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Luxury_HotelModel.User" Width="1.5" PointX="3.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Luxury_HotelModel.YeuCauDichVu" Width="1.5" PointX="8.25" PointY="14" IsExpanded="true" />
+        <AssociationConnector Association="Luxury_HotelModel.FK__BaoCaoTin__ID_Tr__6C190EBB" ManuallyRouted="false" />
+        <AssociationConnector Association="Luxury_HotelModel.FK__BaoCaoTin__Ma_Ph__6B24EA82" ManuallyRouted="false" />
+        <AssociationConnector Association="Luxury_HotelModel.FK__Bookings__ID_Tra__4E88ABD4" ManuallyRouted="false" />
+        <AssociationConnector Association="Luxury_HotelModel.FK__Bookings__ID_Use__4CA06362" ManuallyRouted="false" />
+        <AssociationConnector Association="Luxury_HotelModel.FK__Bookings__Ma_Pho__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="Luxury_HotelModel.FK__DanhGia__Booking__6754599E" ManuallyRouted="false" />
+        <AssociationConnector Association="Luxury_HotelModel.FK__ThanhToan__Booki__5BE2A6F2" ManuallyRouted="false" />
+        <AssociationConnector Association="Luxury_HotelModel.FK__YeuCauDic__Booki__5629CD9C" ManuallyRouted="false" />
+        <AssociationConnector Association="Luxury_HotelModel.FK__ChiTietHo__ID_Di__628FA481" ManuallyRouted="false" />
+        <AssociationConnector Association="Luxury_HotelModel.FK__ChiTietHo__ID_Th__619B8048" ManuallyRouted="false" />
+        <AssociationConnector Association="Luxury_HotelModel.FK__DichVuPhu__ID_Tr__52593CB8" ManuallyRouted="false" />
+        <AssociationConnector Association="Luxury_HotelModel.FK__YeuCauDic__ID_Di__571DF1D5" ManuallyRouted="false" />
+        <AssociationConnector Association="Luxury_HotelModel.FK__Users__ID_Role__3A81B327" ManuallyRouted="false" />
+        <AssociationConnector Association="Luxury_HotelModel.FK__Room__ID_Trang_T__4222D4EF" ManuallyRouted="false" />
+        <AssociationConnector Association="Luxury_HotelModel.FK__ThanhToan__ID_Tr__5CD6CB2B" ManuallyRouted="false" />
+        <AssociationConnector Association="Luxury_HotelModel.FK__YeuCauDic__ID_Tr__5812160E" ManuallyRouted="false" />
+        <AssociationConnector Association="Luxury_HotelModel.Phong_TienIch" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,78 @@
+﻿@model CNPM_Luxury.Model.TienIch
+
+@{
+        Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Xóa tiện ích</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap 4.6 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+        body {
+            background-color: #e9f4fb;
+        }
+
+        .card {
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border: none;
+        }
+
+        .card-header {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+            .btn-danger:hover {
+                background-color: #c82333;
+                border-color: #bd2130;
+            }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4><i class="fas fa-trash-alt"></i> Xác nhận xóa tiện ích</h4>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-danger font-weight-bold">Bạn có chắc chắn muốn xóa tiện ích sau?</p>
+                        <dl class="row">
+                            <dt class="col-sm-4">Tên tiện ích</dt>
+                            <dd class="col-sm-8">@Html.DisplayFor(model => model.TenTienIch)</dd>
+                        </dl>
+
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="form-group text-right">
+                                <button type="submit" class="btn btn-danger">
+                                    <i class="fas fa-trash"></i> Xóa
+                                </button>
+                                @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-secondary ml-2" })
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,95 @@
+﻿@model CNPM_Luxury.Model.Room
+
+@{
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+
+<div class="container" style="margin-top: 40px; max-width: 800px;">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <i class="fa fa-bed"></i> Thêm phòng mới
+            </h3>
+        </div>
+        <div class="panel-body">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    @* Ẩn Mã Phòng *@
+                    @Html.HiddenFor(model => model.Ma_Phong)
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Ten_Phong, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(m => m.Ten_Phong, new { htmlAttributes = new { @class = "form-control", placeholder = "Tên phòng" } })
+                            @Html.ValidationMessageFor(m => m.Ten_Phong, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Mo_Ta, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-8">
+                            @Html.TextAreaFor(m => m.Mo_Ta, new { @class = "form-control", rows = 3, placeholder = "Mô tả chi tiết" })
+                            @Html.ValidationMessageFor(m => m.Mo_Ta, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Gia_Phong, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(m => m.Gia_Phong, new { htmlAttributes = new { @class = "form-control", placeholder = "Giá phòng (VNĐ)" } })
+                            @Html.ValidationMessageFor(m => m.Gia_Phong, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Dia_Diem, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(m => m.Dia_Diem, new { htmlAttributes = new { @class = "form-control", placeholder = "Vị trí phòng" } })
+                            @Html.ValidationMessageFor(m => m.Dia_Diem, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.So_Nguoi, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(m => m.So_Nguoi, new { htmlAttributes = new { @class = "form-control", placeholder = "Số người tối đa" } })
+                            @Html.ValidationMessageFor(m => m.So_Nguoi, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Anh_Phong, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(m => m.Anh_Phong, new { htmlAttributes = new { @class = "form-control", placeholder = "Đường dẫn ảnh hoặc URL" } })
+                            @Html.ValidationMessageFor(m => m.Anh_Phong, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ID_Trang_Thai, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-8">
+                            @Html.DropDownList("ID_Trang_Thai", null, "-- Chọn trạng thái --", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.ID_Trang_Thai, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group text-center">
+                        <div class="col-md-offset-3 col-md-8">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fa fa-save"></i> Tạo phòng
+                            </button>
+                            @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-default" })
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

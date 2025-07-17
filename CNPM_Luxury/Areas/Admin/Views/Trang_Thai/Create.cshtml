@@ -1,0 +1,93 @@
+﻿@model CNPM_Luxury.Model.Trang_Thai
+
+@{
+    ViewBag.Title = "Tạo trạng thái";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<!-- CSS tùy chỉnh -->
+<style>
+    .form-wrapper {
+        max-width: 600px;
+        margin: 80px auto;
+        background: #fff;
+        padding: 40px 30px;
+        border-radius: 12px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-header {
+        background: #007bff;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+        color: #fff;
+        font-size: 22px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    .btn-submit {
+        min-width: 130px;
+        font-weight: 600;
+    }
+
+    .btn-cancel {
+        margin-left: 10px;
+    }
+
+    .input-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #aaa;
+    }
+
+    .input-with-icon {
+        position: relative;
+    }
+
+        .input-with-icon input {
+            padding-left: 35px !important;
+        }
+</style>
+
+<!-- Font Awesome nếu cần icon -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+
+<div class="form-wrapper">
+    <div class="form-header">
+        <i class="fas fa-toggle-on"></i> Tạo trạng thái mới
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group input-with-icon">
+                @Html.LabelFor(model => model.Ten_Trang_Thai)
+                <i class="fas fa-edit input-icon"></i>
+                @Html.TextBoxFor(model => model.Ten_Trang_Thai, new { @class = "form-control", placeholder = "Nhập tên trạng thái" })
+                @Html.ValidationMessageFor(model => model.Ten_Trang_Thai, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-success btn-submit">
+                    <i class="fa fa-save"></i> Lưu
+                </button>
+                @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-default btn-cancel" })
+            </div>
+        </div>
+    }
+</div>

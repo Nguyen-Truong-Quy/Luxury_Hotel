@@ -1,0 +1,1051 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Luxury_HotelModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BaoCaoTinhTrang">
+          <Key>
+            <PropertyRef Name="ID_BaoCao" />
+          </Key>
+          <Property Name="ID_BaoCao" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ma_Phong" Type="varchar" MaxLength="10" />
+          <Property Name="ID_Trang_Thai" Type="int" />
+          <Property Name="NgayGhiNhan" Type="datetime" />
+          <Property Name="GhiChu" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="Bookings">
+          <Key>
+            <PropertyRef Name="BookingID" />
+          </Key>
+          <Property Name="BookingID" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="ID_User" Type="varchar" MaxLength="10" />
+          <Property Name="Ma_Phong" Type="varchar" MaxLength="10" />
+          <Property Name="CheckInDate" Type="date" />
+          <Property Name="CheckOutDate" Type="date" />
+          <Property Name="Ngay_Tao_Don" Type="datetime" />
+          <Property Name="ID_Trang_Thai" Type="int" />
+        </EntityType>
+        <EntityType Name="ChiTietHoaDon">
+          <Key>
+            <PropertyRef Name="ID_ChiTiet" />
+          </Key>
+          <Property Name="ID_ChiTiet" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_ThanhToan" Type="int" />
+          <Property Name="LoaiChiPhi" Type="nvarchar" MaxLength="50" />
+          <Property Name="ID_DichVu" Type="varchar" MaxLength="20" />
+          <Property Name="SoLuong" Type="int" />
+          <Property Name="DonGia" Type="decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <EntityType Name="DanhGia">
+          <Key>
+            <PropertyRef Name="ID_DanhGia" />
+          </Key>
+          <Property Name="ID_DanhGia" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="BookingID" Type="varchar" MaxLength="15" />
+          <Property Name="DiemDanhGia" Type="int" />
+          <Property Name="NoiDungDanhGia" Type="nvarchar" MaxLength="3000" />
+          <Property Name="NgayDanhGia" Type="date" />
+          <Property Name="AnhMinhHoa" Type="text" />
+        </EntityType>
+        <EntityType Name="DichVuPhuThu">
+          <Key>
+            <PropertyRef Name="ID_DichVu" />
+          </Key>
+          <Property Name="ID_DichVu" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Ten_DichVu" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Gia_DichVu" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="ThoiGianMo" Type="time" Precision="7" />
+          <Property Name="ThoiGianKetThuc" Type="time" Precision="7" />
+          <Property Name="ID_Trang_Thai" Type="int" />
+        </EntityType>
+        <EntityType Name="Phong_TienIch">
+          <Key>
+            <PropertyRef Name="Ma_Phong" />
+            <PropertyRef Name="ID_TienIch" />
+          </Key>
+          <Property Name="Ma_Phong" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="ID_TienIch" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID_Role" />
+          </Key>
+          <Property Name="ID_Role" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TEN_ROLE" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Room">
+          <Key>
+            <PropertyRef Name="Ma_Phong" />
+          </Key>
+          <Property Name="Ma_Phong" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Ten_Phong" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Mo_Ta" Type="nvarchar" MaxLength="300" />
+          <Property Name="Gia_Phong" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Dia_Diem" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="So_Nguoi" Type="int" />
+          <Property Name="Anh_Phong" Type="text" />
+          <Property Name="ID_Trang_Thai" Type="int" />
+        </EntityType>
+        <EntityType Name="ThanhToan">
+          <Key>
+            <PropertyRef Name="ID_ThanhToan" />
+          </Key>
+          <Property Name="ID_ThanhToan" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BookingID" Type="varchar" MaxLength="15" />
+          <Property Name="SoTien" Type="decimal" Precision="12" Scale="2" />
+          <Property Name="ThoiGianThanhToan" Type="datetime" />
+          <Property Name="NoiDungThanhToan" Type="nvarchar" MaxLength="100" />
+          <Property Name="ID_Trang_Thai" Type="int" />
+        </EntityType>
+        <EntityType Name="TienIch">
+          <Key>
+            <PropertyRef Name="ID_TienIch" />
+          </Key>
+          <Property Name="ID_TienIch" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenTienIch" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Trang_Thai">
+          <Key>
+            <PropertyRef Name="ID_Trang_Thai" />
+          </Key>
+          <Property Name="ID_Trang_Thai" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ten_Trang_Thai" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="LoaiTrangThai" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID_User" />
+          </Key>
+          <Property Name="ID_User" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="HO_TEN_KH" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="SDT_KH" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="ID_Role" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="YeuCauDichVu">
+          <Key>
+            <PropertyRef Name="ID_YeuCau" />
+          </Key>
+          <Property Name="ID_YeuCau" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BookingID" Type="varchar" MaxLength="15" />
+          <Property Name="ID_DichVu" Type="varchar" MaxLength="20" />
+          <Property Name="ThoiGianYeuCau" Type="datetime" />
+          <Property Name="ID_Trang_Thai" Type="int" />
+        </EntityType>
+        <Association Name="FK__BaoCaoTin__ID_Tr__6C190EBB">
+          <End Role="Trang_Thai" Type="Self.Trang_Thai" Multiplicity="0..1" />
+          <End Role="BaoCaoTinhTrang" Type="Self.BaoCaoTinhTrang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trang_Thai">
+              <PropertyRef Name="ID_Trang_Thai" />
+            </Principal>
+            <Dependent Role="BaoCaoTinhTrang">
+              <PropertyRef Name="ID_Trang_Thai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BaoCaoTin__Ma_Ph__6B24EA82">
+          <End Role="Room" Type="Self.Room" Multiplicity="0..1" />
+          <End Role="BaoCaoTinhTrang" Type="Self.BaoCaoTinhTrang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="Ma_Phong" />
+            </Principal>
+            <Dependent Role="BaoCaoTinhTrang">
+              <PropertyRef Name="Ma_Phong" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Bookings__ID_Tra__4E88ABD4">
+          <End Role="Trang_Thai" Type="Self.Trang_Thai" Multiplicity="0..1" />
+          <End Role="Bookings" Type="Self.Bookings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trang_Thai">
+              <PropertyRef Name="ID_Trang_Thai" />
+            </Principal>
+            <Dependent Role="Bookings">
+              <PropertyRef Name="ID_Trang_Thai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Bookings__ID_Use__4CA06362">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Bookings" Type="Self.Bookings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID_User" />
+            </Principal>
+            <Dependent Role="Bookings">
+              <PropertyRef Name="ID_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Bookings__Ma_Pho__4D94879B">
+          <End Role="Room" Type="Self.Room" Multiplicity="0..1" />
+          <End Role="Bookings" Type="Self.Bookings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="Ma_Phong" />
+            </Principal>
+            <Dependent Role="Bookings">
+              <PropertyRef Name="Ma_Phong" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ChiTietHo__ID_Di__628FA481">
+          <End Role="DichVuPhuThu" Type="Self.DichVuPhuThu" Multiplicity="0..1" />
+          <End Role="ChiTietHoaDon" Type="Self.ChiTietHoaDon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DichVuPhuThu">
+              <PropertyRef Name="ID_DichVu" />
+            </Principal>
+            <Dependent Role="ChiTietHoaDon">
+              <PropertyRef Name="ID_DichVu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ChiTietHo__ID_Th__619B8048">
+          <End Role="ThanhToan" Type="Self.ThanhToan" Multiplicity="0..1" />
+          <End Role="ChiTietHoaDon" Type="Self.ChiTietHoaDon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ThanhToan">
+              <PropertyRef Name="ID_ThanhToan" />
+            </Principal>
+            <Dependent Role="ChiTietHoaDon">
+              <PropertyRef Name="ID_ThanhToan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DanhGia__Booking__6754599E">
+          <End Role="Bookings" Type="Self.Bookings" Multiplicity="0..1" />
+          <End Role="DanhGia" Type="Self.DanhGia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bookings">
+              <PropertyRef Name="BookingID" />
+            </Principal>
+            <Dependent Role="DanhGia">
+              <PropertyRef Name="BookingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DichVuPhu__ID_Tr__52593CB8">
+          <End Role="Trang_Thai" Type="Self.Trang_Thai" Multiplicity="0..1" />
+          <End Role="DichVuPhuThu" Type="Self.DichVuPhuThu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trang_Thai">
+              <PropertyRef Name="ID_Trang_Thai" />
+            </Principal>
+            <Dependent Role="DichVuPhuThu">
+              <PropertyRef Name="ID_Trang_Thai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Phong_Tie__ID_Ti__48CFD27E">
+          <End Role="TienIch" Type="Self.TienIch" Multiplicity="1" />
+          <End Role="Phong_TienIch" Type="Self.Phong_TienIch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TienIch">
+              <PropertyRef Name="ID_TienIch" />
+            </Principal>
+            <Dependent Role="Phong_TienIch">
+              <PropertyRef Name="ID_TienIch" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Phong_Tie__Ma_Ph__47DBAE45">
+          <End Role="Room" Type="Self.Room" Multiplicity="1" />
+          <End Role="Phong_TienIch" Type="Self.Phong_TienIch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="Ma_Phong" />
+            </Principal>
+            <Dependent Role="Phong_TienIch">
+              <PropertyRef Name="Ma_Phong" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Room__ID_Trang_T__4222D4EF">
+          <End Role="Trang_Thai" Type="Self.Trang_Thai" Multiplicity="0..1" />
+          <End Role="Room" Type="Self.Room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trang_Thai">
+              <PropertyRef Name="ID_Trang_Thai" />
+            </Principal>
+            <Dependent Role="Room">
+              <PropertyRef Name="ID_Trang_Thai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ThanhToan__Booki__5BE2A6F2">
+          <End Role="Bookings" Type="Self.Bookings" Multiplicity="0..1" />
+          <End Role="ThanhToan" Type="Self.ThanhToan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bookings">
+              <PropertyRef Name="BookingID" />
+            </Principal>
+            <Dependent Role="ThanhToan">
+              <PropertyRef Name="BookingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ThanhToan__ID_Tr__5CD6CB2B">
+          <End Role="Trang_Thai" Type="Self.Trang_Thai" Multiplicity="0..1" />
+          <End Role="ThanhToan" Type="Self.ThanhToan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trang_Thai">
+              <PropertyRef Name="ID_Trang_Thai" />
+            </Principal>
+            <Dependent Role="ThanhToan">
+              <PropertyRef Name="ID_Trang_Thai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Users__ID_Role__3A81B327">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="ID_Role" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="ID_Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__YeuCauDic__Booki__5629CD9C">
+          <End Role="Bookings" Type="Self.Bookings" Multiplicity="0..1" />
+          <End Role="YeuCauDichVu" Type="Self.YeuCauDichVu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bookings">
+              <PropertyRef Name="BookingID" />
+            </Principal>
+            <Dependent Role="YeuCauDichVu">
+              <PropertyRef Name="BookingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__YeuCauDic__ID_Di__571DF1D5">
+          <End Role="DichVuPhuThu" Type="Self.DichVuPhuThu" Multiplicity="0..1" />
+          <End Role="YeuCauDichVu" Type="Self.YeuCauDichVu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DichVuPhuThu">
+              <PropertyRef Name="ID_DichVu" />
+            </Principal>
+            <Dependent Role="YeuCauDichVu">
+              <PropertyRef Name="ID_DichVu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__YeuCauDic__ID_Tr__5812160E">
+          <End Role="Trang_Thai" Type="Self.Trang_Thai" Multiplicity="0..1" />
+          <End Role="YeuCauDichVu" Type="Self.YeuCauDichVu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trang_Thai">
+              <PropertyRef Name="ID_Trang_Thai" />
+            </Principal>
+            <Dependent Role="YeuCauDichVu">
+              <PropertyRef Name="ID_Trang_Thai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Luxury_HotelModelStoreContainer">
+          <EntitySet Name="BaoCaoTinhTrang" EntityType="Self.BaoCaoTinhTrang" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Bookings" EntityType="Self.Bookings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChiTietHoaDon" EntityType="Self.ChiTietHoaDon" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DanhGia" EntityType="Self.DanhGia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DichVuPhuThu" EntityType="Self.DichVuPhuThu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Phong_TienIch" EntityType="Self.Phong_TienIch" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ThanhToan" EntityType="Self.ThanhToan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TienIch" EntityType="Self.TienIch" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Trang_Thai" EntityType="Self.Trang_Thai" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="YeuCauDichVu" EntityType="Self.YeuCauDichVu" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__BaoCaoTin__ID_Tr__6C190EBB" Association="Self.FK__BaoCaoTin__ID_Tr__6C190EBB">
+            <End Role="Trang_Thai" EntitySet="Trang_Thai" />
+            <End Role="BaoCaoTinhTrang" EntitySet="BaoCaoTinhTrang" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BaoCaoTin__Ma_Ph__6B24EA82" Association="Self.FK__BaoCaoTin__Ma_Ph__6B24EA82">
+            <End Role="Room" EntitySet="Room" />
+            <End Role="BaoCaoTinhTrang" EntitySet="BaoCaoTinhTrang" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Bookings__ID_Tra__4E88ABD4" Association="Self.FK__Bookings__ID_Tra__4E88ABD4">
+            <End Role="Trang_Thai" EntitySet="Trang_Thai" />
+            <End Role="Bookings" EntitySet="Bookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Bookings__ID_Use__4CA06362" Association="Self.FK__Bookings__ID_Use__4CA06362">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Bookings" EntitySet="Bookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Bookings__Ma_Pho__4D94879B" Association="Self.FK__Bookings__Ma_Pho__4D94879B">
+            <End Role="Room" EntitySet="Room" />
+            <End Role="Bookings" EntitySet="Bookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ChiTietHo__ID_Di__628FA481" Association="Self.FK__ChiTietHo__ID_Di__628FA481">
+            <End Role="DichVuPhuThu" EntitySet="DichVuPhuThu" />
+            <End Role="ChiTietHoaDon" EntitySet="ChiTietHoaDon" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ChiTietHo__ID_Th__619B8048" Association="Self.FK__ChiTietHo__ID_Th__619B8048">
+            <End Role="ThanhToan" EntitySet="ThanhToan" />
+            <End Role="ChiTietHoaDon" EntitySet="ChiTietHoaDon" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DanhGia__Booking__6754599E" Association="Self.FK__DanhGia__Booking__6754599E">
+            <End Role="Bookings" EntitySet="Bookings" />
+            <End Role="DanhGia" EntitySet="DanhGia" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DichVuPhu__ID_Tr__52593CB8" Association="Self.FK__DichVuPhu__ID_Tr__52593CB8">
+            <End Role="Trang_Thai" EntitySet="Trang_Thai" />
+            <End Role="DichVuPhuThu" EntitySet="DichVuPhuThu" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Phong_Tie__ID_Ti__48CFD27E" Association="Self.FK__Phong_Tie__ID_Ti__48CFD27E">
+            <End Role="TienIch" EntitySet="TienIch" />
+            <End Role="Phong_TienIch" EntitySet="Phong_TienIch" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Phong_Tie__Ma_Ph__47DBAE45" Association="Self.FK__Phong_Tie__Ma_Ph__47DBAE45">
+            <End Role="Room" EntitySet="Room" />
+            <End Role="Phong_TienIch" EntitySet="Phong_TienIch" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Room__ID_Trang_T__4222D4EF" Association="Self.FK__Room__ID_Trang_T__4222D4EF">
+            <End Role="Trang_Thai" EntitySet="Trang_Thai" />
+            <End Role="Room" EntitySet="Room" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ThanhToan__Booki__5BE2A6F2" Association="Self.FK__ThanhToan__Booki__5BE2A6F2">
+            <End Role="Bookings" EntitySet="Bookings" />
+            <End Role="ThanhToan" EntitySet="ThanhToan" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ThanhToan__ID_Tr__5CD6CB2B" Association="Self.FK__ThanhToan__ID_Tr__5CD6CB2B">
+            <End Role="Trang_Thai" EntitySet="Trang_Thai" />
+            <End Role="ThanhToan" EntitySet="ThanhToan" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__ID_Role__3A81B327" Association="Self.FK__Users__ID_Role__3A81B327">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__YeuCauDic__Booki__5629CD9C" Association="Self.FK__YeuCauDic__Booki__5629CD9C">
+            <End Role="Bookings" EntitySet="Bookings" />
+            <End Role="YeuCauDichVu" EntitySet="YeuCauDichVu" />
+          </AssociationSet>
+          <AssociationSet Name="FK__YeuCauDic__ID_Di__571DF1D5" Association="Self.FK__YeuCauDic__ID_Di__571DF1D5">
+            <End Role="DichVuPhuThu" EntitySet="DichVuPhuThu" />
+            <End Role="YeuCauDichVu" EntitySet="YeuCauDichVu" />
+          </AssociationSet>
+          <AssociationSet Name="FK__YeuCauDic__ID_Tr__5812160E" Association="Self.FK__YeuCauDic__ID_Tr__5812160E">
+            <End Role="Trang_Thai" EntitySet="Trang_Thai" />
+            <End Role="YeuCauDichVu" EntitySet="YeuCauDichVu" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Luxury_HotelModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BaoCaoTinhTrang">
+          <Key>
+            <PropertyRef Name="ID_BaoCao" />
+          </Key>
+          <Property Name="ID_BaoCao" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ma_Phong" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ID_Trang_Thai" Type="Int32" />
+          <Property Name="NgayGhiNhan" Type="DateTime" Precision="3" />
+          <Property Name="GhiChu" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Trang_Thai" Relationship="Self.FK__BaoCaoTin__ID_Tr__6C190EBB" FromRole="BaoCaoTinhTrang" ToRole="Trang_Thai" />
+          <NavigationProperty Name="Room" Relationship="Self.FK__BaoCaoTin__Ma_Ph__6B24EA82" FromRole="BaoCaoTinhTrang" ToRole="Room" />
+        </EntityType>
+        <EntityType Name="Booking">
+          <Key>
+            <PropertyRef Name="BookingID" />
+          </Key>
+          <Property Name="BookingID" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID_User" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Ma_Phong" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CheckInDate" Type="DateTime" Precision="0" />
+          <Property Name="CheckOutDate" Type="DateTime" Precision="0" />
+          <Property Name="Ngay_Tao_Don" Type="DateTime" Precision="3" />
+          <Property Name="ID_Trang_Thai" Type="Int32" />
+          <NavigationProperty Name="Trang_Thai" Relationship="Self.FK__Bookings__ID_Tra__4E88ABD4" FromRole="Bookings" ToRole="Trang_Thai" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Bookings__ID_Use__4CA06362" FromRole="Bookings" ToRole="Users" />
+          <NavigationProperty Name="Room" Relationship="Self.FK__Bookings__Ma_Pho__4D94879B" FromRole="Bookings" ToRole="Room" />
+          <NavigationProperty Name="DanhGias" Relationship="Self.FK__DanhGia__Booking__6754599E" FromRole="Bookings" ToRole="DanhGia" />
+          <NavigationProperty Name="ThanhToans" Relationship="Self.FK__ThanhToan__Booki__5BE2A6F2" FromRole="Bookings" ToRole="ThanhToan" />
+          <NavigationProperty Name="YeuCauDichVus" Relationship="Self.FK__YeuCauDic__Booki__5629CD9C" FromRole="Bookings" ToRole="YeuCauDichVu" />
+        </EntityType>
+        <EntityType Name="ChiTietHoaDon">
+          <Key>
+            <PropertyRef Name="ID_ChiTiet" />
+          </Key>
+          <Property Name="ID_ChiTiet" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_ThanhToan" Type="Int32" />
+          <Property Name="LoaiChiPhi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ID_DichVu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SoLuong" Type="Int32" />
+          <Property Name="DonGia" Type="Decimal" Precision="10" Scale="2" />
+          <NavigationProperty Name="DichVuPhuThu" Relationship="Self.FK__ChiTietHo__ID_Di__628FA481" FromRole="ChiTietHoaDon" ToRole="DichVuPhuThu" />
+          <NavigationProperty Name="ThanhToan" Relationship="Self.FK__ChiTietHo__ID_Th__619B8048" FromRole="ChiTietHoaDon" ToRole="ThanhToan" />
+        </EntityType>
+        <EntityType Name="DanhGia">
+          <Key>
+            <PropertyRef Name="ID_DanhGia" />
+          </Key>
+          <Property Name="ID_DanhGia" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BookingID" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DiemDanhGia" Type="Int32" />
+          <Property Name="NoiDungDanhGia" Type="String" MaxLength="3000" FixedLength="false" Unicode="true" />
+          <Property Name="NgayDanhGia" Type="DateTime" Precision="0" />
+          <Property Name="AnhMinhHoa" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Booking" Relationship="Self.FK__DanhGia__Booking__6754599E" FromRole="DanhGia" ToRole="Bookings" />
+        </EntityType>
+        <EntityType Name="DichVuPhuThu">
+          <Key>
+            <PropertyRef Name="ID_DichVu" />
+          </Key>
+          <Property Name="ID_DichVu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ten_DichVu" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Gia_DichVu" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="ThoiGianMo" Type="Time" Precision="7" />
+          <Property Name="ThoiGianKetThuc" Type="Time" Precision="7" />
+          <Property Name="ID_Trang_Thai" Type="Int32" />
+          <NavigationProperty Name="ChiTietHoaDons" Relationship="Self.FK__ChiTietHo__ID_Di__628FA481" FromRole="DichVuPhuThu" ToRole="ChiTietHoaDon" />
+          <NavigationProperty Name="Trang_Thai" Relationship="Self.FK__DichVuPhu__ID_Tr__52593CB8" FromRole="DichVuPhuThu" ToRole="Trang_Thai" />
+          <NavigationProperty Name="YeuCauDichVus" Relationship="Self.FK__YeuCauDic__ID_Di__571DF1D5" FromRole="DichVuPhuThu" ToRole="YeuCauDichVu" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID_Role" />
+          </Key>
+          <Property Name="ID_Role" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TEN_ROLE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Users__ID_Role__3A81B327" FromRole="Role" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Room">
+          <Key>
+            <PropertyRef Name="Ma_Phong" />
+          </Key>
+          <Property Name="Ma_Phong" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ten_Phong" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Mo_Ta" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Gia_Phong" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Dia_Diem" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="So_Nguoi" Type="Int32" />
+          <Property Name="Anh_Phong" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ID_Trang_Thai" Type="Int32" />
+          <NavigationProperty Name="BaoCaoTinhTrangs" Relationship="Self.FK__BaoCaoTin__Ma_Ph__6B24EA82" FromRole="Room" ToRole="BaoCaoTinhTrang" />
+          <NavigationProperty Name="Bookings" Relationship="Self.FK__Bookings__Ma_Pho__4D94879B" FromRole="Room" ToRole="Bookings" />
+          <NavigationProperty Name="Trang_Thai" Relationship="Self.FK__Room__ID_Trang_T__4222D4EF" FromRole="Room" ToRole="Trang_Thai" />
+          <NavigationProperty Name="TienIches" Relationship="Self.Phong_TienIch" FromRole="Room" ToRole="TienIch" />
+        </EntityType>
+        <EntityType Name="ThanhToan">
+          <Key>
+            <PropertyRef Name="ID_ThanhToan" />
+          </Key>
+          <Property Name="ID_ThanhToan" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BookingID" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="SoTien" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="ThoiGianThanhToan" Type="DateTime" Precision="3" />
+          <Property Name="NoiDungThanhToan" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ID_Trang_Thai" Type="Int32" />
+          <NavigationProperty Name="Booking" Relationship="Self.FK__ThanhToan__Booki__5BE2A6F2" FromRole="ThanhToan" ToRole="Bookings" />
+          <NavigationProperty Name="ChiTietHoaDons" Relationship="Self.FK__ChiTietHo__ID_Th__619B8048" FromRole="ThanhToan" ToRole="ChiTietHoaDon" />
+          <NavigationProperty Name="Trang_Thai" Relationship="Self.FK__ThanhToan__ID_Tr__5CD6CB2B" FromRole="ThanhToan" ToRole="Trang_Thai" />
+        </EntityType>
+        <EntityType Name="TienIch">
+          <Key>
+            <PropertyRef Name="ID_TienIch" />
+          </Key>
+          <Property Name="ID_TienIch" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenTienIch" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Rooms" Relationship="Self.Phong_TienIch" FromRole="TienIch" ToRole="Room" />
+        </EntityType>
+        <EntityType Name="Trang_Thai">
+          <Key>
+            <PropertyRef Name="ID_Trang_Thai" />
+          </Key>
+          <Property Name="ID_Trang_Thai" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ten_Trang_Thai" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LoaiTrangThai" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="BaoCaoTinhTrangs" Relationship="Self.FK__BaoCaoTin__ID_Tr__6C190EBB" FromRole="Trang_Thai" ToRole="BaoCaoTinhTrang" />
+          <NavigationProperty Name="Bookings" Relationship="Self.FK__Bookings__ID_Tra__4E88ABD4" FromRole="Trang_Thai" ToRole="Bookings" />
+          <NavigationProperty Name="DichVuPhuThus" Relationship="Self.FK__DichVuPhu__ID_Tr__52593CB8" FromRole="Trang_Thai" ToRole="DichVuPhuThu" />
+          <NavigationProperty Name="Rooms" Relationship="Self.FK__Room__ID_Trang_T__4222D4EF" FromRole="Trang_Thai" ToRole="Room" />
+          <NavigationProperty Name="ThanhToans" Relationship="Self.FK__ThanhToan__ID_Tr__5CD6CB2B" FromRole="Trang_Thai" ToRole="ThanhToan" />
+          <NavigationProperty Name="YeuCauDichVus" Relationship="Self.FK__YeuCauDic__ID_Tr__5812160E" FromRole="Trang_Thai" ToRole="YeuCauDichVu" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID_User" />
+          </Key>
+          <Property Name="ID_User" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HO_TEN_KH" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SDT_KH" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID_Role" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Bookings" Relationship="Self.FK__Bookings__ID_Use__4CA06362" FromRole="Users" ToRole="Bookings" />
+          <NavigationProperty Name="Role" Relationship="Self.FK__Users__ID_Role__3A81B327" FromRole="Users" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="YeuCauDichVu">
+          <Key>
+            <PropertyRef Name="ID_YeuCau" />
+          </Key>
+          <Property Name="ID_YeuCau" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BookingID" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="ID_DichVu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ThoiGianYeuCau" Type="DateTime" Precision="3" />
+          <Property Name="ID_Trang_Thai" Type="Int32" />
+          <NavigationProperty Name="Booking" Relationship="Self.FK__YeuCauDic__Booki__5629CD9C" FromRole="YeuCauDichVu" ToRole="Bookings" />
+          <NavigationProperty Name="DichVuPhuThu" Relationship="Self.FK__YeuCauDic__ID_Di__571DF1D5" FromRole="YeuCauDichVu" ToRole="DichVuPhuThu" />
+          <NavigationProperty Name="Trang_Thai" Relationship="Self.FK__YeuCauDic__ID_Tr__5812160E" FromRole="YeuCauDichVu" ToRole="Trang_Thai" />
+        </EntityType>
+        <Association Name="FK__BaoCaoTin__ID_Tr__6C190EBB">
+          <End Role="Trang_Thai" Type="Self.Trang_Thai" Multiplicity="0..1" />
+          <End Role="BaoCaoTinhTrang" Type="Self.BaoCaoTinhTrang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trang_Thai">
+              <PropertyRef Name="ID_Trang_Thai" />
+            </Principal>
+            <Dependent Role="BaoCaoTinhTrang">
+              <PropertyRef Name="ID_Trang_Thai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BaoCaoTin__Ma_Ph__6B24EA82">
+          <End Role="Room" Type="Self.Room" Multiplicity="0..1" />
+          <End Role="BaoCaoTinhTrang" Type="Self.BaoCaoTinhTrang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="Ma_Phong" />
+            </Principal>
+            <Dependent Role="BaoCaoTinhTrang">
+              <PropertyRef Name="Ma_Phong" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Bookings__ID_Tra__4E88ABD4">
+          <End Role="Trang_Thai" Type="Self.Trang_Thai" Multiplicity="0..1" />
+          <End Role="Bookings" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trang_Thai">
+              <PropertyRef Name="ID_Trang_Thai" />
+            </Principal>
+            <Dependent Role="Bookings">
+              <PropertyRef Name="ID_Trang_Thai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Bookings__ID_Use__4CA06362">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Bookings" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID_User" />
+            </Principal>
+            <Dependent Role="Bookings">
+              <PropertyRef Name="ID_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Bookings__Ma_Pho__4D94879B">
+          <End Role="Room" Type="Self.Room" Multiplicity="0..1" />
+          <End Role="Bookings" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="Ma_Phong" />
+            </Principal>
+            <Dependent Role="Bookings">
+              <PropertyRef Name="Ma_Phong" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DanhGia__Booking__6754599E">
+          <End Role="Bookings" Type="Self.Booking" Multiplicity="0..1" />
+          <End Role="DanhGia" Type="Self.DanhGia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bookings">
+              <PropertyRef Name="BookingID" />
+            </Principal>
+            <Dependent Role="DanhGia">
+              <PropertyRef Name="BookingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ThanhToan__Booki__5BE2A6F2">
+          <End Role="Bookings" Type="Self.Booking" Multiplicity="0..1" />
+          <End Role="ThanhToan" Type="Self.ThanhToan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bookings">
+              <PropertyRef Name="BookingID" />
+            </Principal>
+            <Dependent Role="ThanhToan">
+              <PropertyRef Name="BookingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__YeuCauDic__Booki__5629CD9C">
+          <End Role="Bookings" Type="Self.Booking" Multiplicity="0..1" />
+          <End Role="YeuCauDichVu" Type="Self.YeuCauDichVu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bookings">
+              <PropertyRef Name="BookingID" />
+            </Principal>
+            <Dependent Role="YeuCauDichVu">
+              <PropertyRef Name="BookingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ChiTietHo__ID_Di__628FA481">
+          <End Role="DichVuPhuThu" Type="Self.DichVuPhuThu" Multiplicity="0..1" />
+          <End Role="ChiTietHoaDon" Type="Self.ChiTietHoaDon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DichVuPhuThu">
+              <PropertyRef Name="ID_DichVu" />
+            </Principal>
+            <Dependent Role="ChiTietHoaDon">
+              <PropertyRef Name="ID_DichVu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ChiTietHo__ID_Th__619B8048">
+          <End Role="ThanhToan" Type="Self.ThanhToan" Multiplicity="0..1" />
+          <End Role="ChiTietHoaDon" Type="Self.ChiTietHoaDon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ThanhToan">
+              <PropertyRef Name="ID_ThanhToan" />
+            </Principal>
+            <Dependent Role="ChiTietHoaDon">
+              <PropertyRef Name="ID_ThanhToan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DichVuPhu__ID_Tr__52593CB8">
+          <End Role="Trang_Thai" Type="Self.Trang_Thai" Multiplicity="0..1" />
+          <End Role="DichVuPhuThu" Type="Self.DichVuPhuThu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trang_Thai">
+              <PropertyRef Name="ID_Trang_Thai" />
+            </Principal>
+            <Dependent Role="DichVuPhuThu">
+              <PropertyRef Name="ID_Trang_Thai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__YeuCauDic__ID_Di__571DF1D5">
+          <End Role="DichVuPhuThu" Type="Self.DichVuPhuThu" Multiplicity="0..1" />
+          <End Role="YeuCauDichVu" Type="Self.YeuCauDichVu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DichVuPhuThu">
+              <PropertyRef Name="ID_DichVu" />
+            </Principal>
+            <Dependent Role="YeuCauDichVu">
+              <PropertyRef Name="ID_DichVu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Users__ID_Role__3A81B327">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="ID_Role" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="ID_Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Room__ID_Trang_T__4222D4EF">
+          <End Role="Trang_Thai" Type="Self.Trang_Thai" Multiplicity="0..1" />
+          <End Role="Room" Type="Self.Room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trang_Thai">
+              <PropertyRef Name="ID_Trang_Thai" />
+            </Principal>
+            <Dependent Role="Room">
+              <PropertyRef Name="ID_Trang_Thai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ThanhToan__ID_Tr__5CD6CB2B">
+          <End Role="Trang_Thai" Type="Self.Trang_Thai" Multiplicity="0..1" />
+          <End Role="ThanhToan" Type="Self.ThanhToan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trang_Thai">
+              <PropertyRef Name="ID_Trang_Thai" />
+            </Principal>
+            <Dependent Role="ThanhToan">
+              <PropertyRef Name="ID_Trang_Thai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__YeuCauDic__ID_Tr__5812160E">
+          <End Role="Trang_Thai" Type="Self.Trang_Thai" Multiplicity="0..1" />
+          <End Role="YeuCauDichVu" Type="Self.YeuCauDichVu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trang_Thai">
+              <PropertyRef Name="ID_Trang_Thai" />
+            </Principal>
+            <Dependent Role="YeuCauDichVu">
+              <PropertyRef Name="ID_Trang_Thai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Phong_TienIch">
+          <End Role="TienIch" Type="Self.TienIch" Multiplicity="*" />
+          <End Role="Room" Type="Self.Room" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="Luxury_HotelEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BaoCaoTinhTrangs" EntityType="Self.BaoCaoTinhTrang" />
+          <EntitySet Name="Bookings" EntityType="Self.Booking" />
+          <EntitySet Name="ChiTietHoaDons" EntityType="Self.ChiTietHoaDon" />
+          <EntitySet Name="DanhGias" EntityType="Self.DanhGia" />
+          <EntitySet Name="DichVuPhuThus" EntityType="Self.DichVuPhuThu" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Rooms" EntityType="Self.Room" />
+          <EntitySet Name="ThanhToans" EntityType="Self.ThanhToan" />
+          <EntitySet Name="TienIches" EntityType="Self.TienIch" />
+          <EntitySet Name="Trang_Thai" EntityType="Self.Trang_Thai" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="YeuCauDichVus" EntityType="Self.YeuCauDichVu" />
+          <AssociationSet Name="FK__BaoCaoTin__ID_Tr__6C190EBB" Association="Self.FK__BaoCaoTin__ID_Tr__6C190EBB">
+            <End Role="Trang_Thai" EntitySet="Trang_Thai" />
+            <End Role="BaoCaoTinhTrang" EntitySet="BaoCaoTinhTrangs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BaoCaoTin__Ma_Ph__6B24EA82" Association="Self.FK__BaoCaoTin__Ma_Ph__6B24EA82">
+            <End Role="Room" EntitySet="Rooms" />
+            <End Role="BaoCaoTinhTrang" EntitySet="BaoCaoTinhTrangs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Bookings__ID_Tra__4E88ABD4" Association="Self.FK__Bookings__ID_Tra__4E88ABD4">
+            <End Role="Trang_Thai" EntitySet="Trang_Thai" />
+            <End Role="Bookings" EntitySet="Bookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Bookings__ID_Use__4CA06362" Association="Self.FK__Bookings__ID_Use__4CA06362">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Bookings" EntitySet="Bookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Bookings__Ma_Pho__4D94879B" Association="Self.FK__Bookings__Ma_Pho__4D94879B">
+            <End Role="Room" EntitySet="Rooms" />
+            <End Role="Bookings" EntitySet="Bookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DanhGia__Booking__6754599E" Association="Self.FK__DanhGia__Booking__6754599E">
+            <End Role="Bookings" EntitySet="Bookings" />
+            <End Role="DanhGia" EntitySet="DanhGias" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ThanhToan__Booki__5BE2A6F2" Association="Self.FK__ThanhToan__Booki__5BE2A6F2">
+            <End Role="Bookings" EntitySet="Bookings" />
+            <End Role="ThanhToan" EntitySet="ThanhToans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__YeuCauDic__Booki__5629CD9C" Association="Self.FK__YeuCauDic__Booki__5629CD9C">
+            <End Role="Bookings" EntitySet="Bookings" />
+            <End Role="YeuCauDichVu" EntitySet="YeuCauDichVus" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ChiTietHo__ID_Di__628FA481" Association="Self.FK__ChiTietHo__ID_Di__628FA481">
+            <End Role="DichVuPhuThu" EntitySet="DichVuPhuThus" />
+            <End Role="ChiTietHoaDon" EntitySet="ChiTietHoaDons" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ChiTietHo__ID_Th__619B8048" Association="Self.FK__ChiTietHo__ID_Th__619B8048">
+            <End Role="ThanhToan" EntitySet="ThanhToans" />
+            <End Role="ChiTietHoaDon" EntitySet="ChiTietHoaDons" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DichVuPhu__ID_Tr__52593CB8" Association="Self.FK__DichVuPhu__ID_Tr__52593CB8">
+            <End Role="Trang_Thai" EntitySet="Trang_Thai" />
+            <End Role="DichVuPhuThu" EntitySet="DichVuPhuThus" />
+          </AssociationSet>
+          <AssociationSet Name="FK__YeuCauDic__ID_Di__571DF1D5" Association="Self.FK__YeuCauDic__ID_Di__571DF1D5">
+            <End Role="DichVuPhuThu" EntitySet="DichVuPhuThus" />
+            <End Role="YeuCauDichVu" EntitySet="YeuCauDichVus" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__ID_Role__3A81B327" Association="Self.FK__Users__ID_Role__3A81B327">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Room__ID_Trang_T__4222D4EF" Association="Self.FK__Room__ID_Trang_T__4222D4EF">
+            <End Role="Trang_Thai" EntitySet="Trang_Thai" />
+            <End Role="Room" EntitySet="Rooms" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ThanhToan__ID_Tr__5CD6CB2B" Association="Self.FK__ThanhToan__ID_Tr__5CD6CB2B">
+            <End Role="Trang_Thai" EntitySet="Trang_Thai" />
+            <End Role="ThanhToan" EntitySet="ThanhToans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__YeuCauDic__ID_Tr__5812160E" Association="Self.FK__YeuCauDic__ID_Tr__5812160E">
+            <End Role="Trang_Thai" EntitySet="Trang_Thai" />
+            <End Role="YeuCauDichVu" EntitySet="YeuCauDichVus" />
+          </AssociationSet>
+          <AssociationSet Name="Phong_TienIch" Association="Self.Phong_TienIch">
+            <End Role="TienIch" EntitySet="TienIches" />
+            <End Role="Room" EntitySet="Rooms" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Luxury_HotelModelStoreContainer" CdmEntityContainer="Luxury_HotelEntities">
+          <EntitySetMapping Name="BaoCaoTinhTrangs">
+            <EntityTypeMapping TypeName="Luxury_HotelModel.BaoCaoTinhTrang">
+              <MappingFragment StoreEntitySet="BaoCaoTinhTrang">
+                <ScalarProperty Name="ID_BaoCao" ColumnName="ID_BaoCao" />
+                <ScalarProperty Name="Ma_Phong" ColumnName="Ma_Phong" />
+                <ScalarProperty Name="ID_Trang_Thai" ColumnName="ID_Trang_Thai" />
+                <ScalarProperty Name="NgayGhiNhan" ColumnName="NgayGhiNhan" />
+                <ScalarProperty Name="GhiChu" ColumnName="GhiChu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bookings">
+            <EntityTypeMapping TypeName="Luxury_HotelModel.Booking">
+              <MappingFragment StoreEntitySet="Bookings">
+                <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+                <ScalarProperty Name="ID_User" ColumnName="ID_User" />
+                <ScalarProperty Name="Ma_Phong" ColumnName="Ma_Phong" />
+                <ScalarProperty Name="CheckInDate" ColumnName="CheckInDate" />
+                <ScalarProperty Name="CheckOutDate" ColumnName="CheckOutDate" />
+                <ScalarProperty Name="Ngay_Tao_Don" ColumnName="Ngay_Tao_Don" />
+                <ScalarProperty Name="ID_Trang_Thai" ColumnName="ID_Trang_Thai" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChiTietHoaDons">
+            <EntityTypeMapping TypeName="Luxury_HotelModel.ChiTietHoaDon">
+              <MappingFragment StoreEntitySet="ChiTietHoaDon">
+                <ScalarProperty Name="ID_ChiTiet" ColumnName="ID_ChiTiet" />
+                <ScalarProperty Name="ID_ThanhToan" ColumnName="ID_ThanhToan" />
+                <ScalarProperty Name="LoaiChiPhi" ColumnName="LoaiChiPhi" />
+                <ScalarProperty Name="ID_DichVu" ColumnName="ID_DichVu" />
+                <ScalarProperty Name="SoLuong" ColumnName="SoLuong" />
+                <ScalarProperty Name="DonGia" ColumnName="DonGia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DanhGias">
+            <EntityTypeMapping TypeName="Luxury_HotelModel.DanhGia">
+              <MappingFragment StoreEntitySet="DanhGia">
+                <ScalarProperty Name="ID_DanhGia" ColumnName="ID_DanhGia" />
+                <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+                <ScalarProperty Name="DiemDanhGia" ColumnName="DiemDanhGia" />
+                <ScalarProperty Name="NoiDungDanhGia" ColumnName="NoiDungDanhGia" />
+                <ScalarProperty Name="NgayDanhGia" ColumnName="NgayDanhGia" />
+                <ScalarProperty Name="AnhMinhHoa" ColumnName="AnhMinhHoa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DichVuPhuThus">
+            <EntityTypeMapping TypeName="Luxury_HotelModel.DichVuPhuThu">
+              <MappingFragment StoreEntitySet="DichVuPhuThu">
+                <ScalarProperty Name="ID_DichVu" ColumnName="ID_DichVu" />
+                <ScalarProperty Name="Ten_DichVu" ColumnName="Ten_DichVu" />
+                <ScalarProperty Name="Gia_DichVu" ColumnName="Gia_DichVu" />
+                <ScalarProperty Name="ThoiGianMo" ColumnName="ThoiGianMo" />
+                <ScalarProperty Name="ThoiGianKetThuc" ColumnName="ThoiGianKetThuc" />
+                <ScalarProperty Name="ID_Trang_Thai" ColumnName="ID_Trang_Thai" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="Luxury_HotelModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="ID_Role" ColumnName="ID_Role" />
+                <ScalarProperty Name="TEN_ROLE" ColumnName="TEN_ROLE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rooms">
+            <EntityTypeMapping TypeName="Luxury_HotelModel.Room">
+              <MappingFragment StoreEntitySet="Room">
+                <ScalarProperty Name="Ma_Phong" ColumnName="Ma_Phong" />
+                <ScalarProperty Name="Ten_Phong" ColumnName="Ten_Phong" />
+                <ScalarProperty Name="Mo_Ta" ColumnName="Mo_Ta" />
+                <ScalarProperty Name="Gia_Phong" ColumnName="Gia_Phong" />
+                <ScalarProperty Name="Dia_Diem" ColumnName="Dia_Diem" />
+                <ScalarProperty Name="So_Nguoi" ColumnName="So_Nguoi" />
+                <ScalarProperty Name="Anh_Phong" ColumnName="Anh_Phong" />
+                <ScalarProperty Name="ID_Trang_Thai" ColumnName="ID_Trang_Thai" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ThanhToans">
+            <EntityTypeMapping TypeName="Luxury_HotelModel.ThanhToan">
+              <MappingFragment StoreEntitySet="ThanhToan">
+                <ScalarProperty Name="ID_ThanhToan" ColumnName="ID_ThanhToan" />
+                <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+                <ScalarProperty Name="SoTien" ColumnName="SoTien" />
+                <ScalarProperty Name="ThoiGianThanhToan" ColumnName="ThoiGianThanhToan" />
+                <ScalarProperty Name="NoiDungThanhToan" ColumnName="NoiDungThanhToan" />
+                <ScalarProperty Name="ID_Trang_Thai" ColumnName="ID_Trang_Thai" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TienIches">
+            <EntityTypeMapping TypeName="Luxury_HotelModel.TienIch">
+              <MappingFragment StoreEntitySet="TienIch">
+                <ScalarProperty Name="ID_TienIch" ColumnName="ID_TienIch" />
+                <ScalarProperty Name="TenTienIch" ColumnName="TenTienIch" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trang_Thai">
+            <EntityTypeMapping TypeName="Luxury_HotelModel.Trang_Thai">
+              <MappingFragment StoreEntitySet="Trang_Thai">
+                <ScalarProperty Name="ID_Trang_Thai" ColumnName="ID_Trang_Thai" />
+                <ScalarProperty Name="Ten_Trang_Thai" ColumnName="Ten_Trang_Thai" />
+                <ScalarProperty Name="LoaiTrangThai" ColumnName="LoaiTrangThai" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="Luxury_HotelModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ID_User" ColumnName="ID_User" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="HO_TEN_KH" ColumnName="HO_TEN_KH" />
+                <ScalarProperty Name="SDT_KH" ColumnName="SDT_KH" />
+                <ScalarProperty Name="ID_Role" ColumnName="ID_Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="YeuCauDichVus">
+            <EntityTypeMapping TypeName="Luxury_HotelModel.YeuCauDichVu">
+              <MappingFragment StoreEntitySet="YeuCauDichVu">
+                <ScalarProperty Name="ID_YeuCau" ColumnName="ID_YeuCau" />
+                <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+                <ScalarProperty Name="ID_DichVu" ColumnName="ID_DichVu" />
+                <ScalarProperty Name="ThoiGianYeuCau" ColumnName="ThoiGianYeuCau" />
+                <ScalarProperty Name="ID_Trang_Thai" ColumnName="ID_Trang_Thai" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Phong_TienIch" TypeName="Luxury_HotelModel.Phong_TienIch" StoreEntitySet="Phong_TienIch">
+            <EndProperty Name="TienIch">
+              <ScalarProperty Name="ID_TienIch" ColumnName="ID_TienIch" />
+            </EndProperty>
+            <EndProperty Name="Room">
+              <ScalarProperty Name="Ma_Phong" ColumnName="Ma_Phong" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

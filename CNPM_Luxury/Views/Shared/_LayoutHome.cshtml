@@ -1,0 +1,224 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Luxury Hotel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/CSS/LayoutHeader.css" />
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+        }
+
+        .nav-bar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background-color: #caa92b;
+        }
+
+        .nav-left,
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+            .nav-left .login-link {
+                color: #fff;
+                font-size: 16px;
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                text-decoration: none;
+            }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            padding: 8px 16px;
+            border-radius: 40px;
+            flex: 1;
+            max-width: 500px;
+        }
+
+            .search-box input {
+                border: none;
+                outline: none;
+                font-size: 16px;
+                flex: 1;
+                background: transparent;
+            }
+
+            .search-box i {
+                color: #333;
+            }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #fff;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .banner-img {
+            width: 100%;
+            max-height: 450px;
+            object-fit: cover;
+            border-bottom: 5px solid #d4af37;
+        }
+
+        .room-list {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 40px 20px;
+        }
+
+        .room-card {
+            background-color: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 250px;
+            text-align: center;
+        }
+
+            .room-card img {
+                width: 100%;
+                height: 180px;
+                object-fit: cover;
+            }
+
+            .room-card p {
+                padding: 15px;
+                font-size: 15px;
+                color: #0d3b66;
+            }
+
+        footer {
+            background-color: #0d3b66;
+            color: white;
+            padding: 30px 20px;
+        }
+
+        .footer-contact {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .contact-icon {
+            width: 20px;
+            margin-right: 10px;
+        }
+
+        .footer-word {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .footer-bottom {
+            background-color: #092a4a;
+            text-align: center;
+            padding: 15px 0;
+        }
+
+        .social-icon img {
+            width: 24px;
+            margin: 0 8px;
+            cursor: pointer;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="nav-bar">
+            <div class="nav-left">
+                <a href="#" class="login-link">
+                    <i class="fas fa-user"></i> Đăng ký / Đăng nhập
+                </a>
+            </div>
+            <div class="search-box">
+                <input type="text" placeholder="Tìm kiếm...">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="nav-right">
+                <i class="fas fa-bars"></i>
+                <span class="brand">
+                    <i class="fas fa-hotel"></i> LUXURY HOTEL
+                </span>
+            </div>
+        </div>
+    </header>
+
+    @RenderBody()
+
+    <section class="banner">
+        <img src="~/Image/poster.jpg" alt="Sweet room Banner" class="banner-img" />
+    </section>
+
+    <section class="room-list">
+        <div class="room-card">
+            <img src="~/Image/anh1.jpg" alt="room 1" />
+            <p>Tên Phòng: Phòng 1<br>Giá: 100.000 VNĐ</p>
+        </div>
+        <div class="room-card">
+            <img src="~/Image/anh1.jpg" alt="room 2" />
+            <p>Tên Phòng: Phòng 2<br>Giá: 100.000 VNĐ</p>
+        </div>
+        <div class="room-card">
+            <img src="~/Image/anh1.jpg" alt="room 3" />
+            <p>Tên Phòng: Phòng 3<br>Giá: 100.000 VNĐ</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-contact">
+            <div class="contact-info">
+                <div class="contact-left">
+                    <p><img src="~/Image/phone-call.png" class="contact-icon"> +012 345 678 90</p>
+                    <p><img src="~/Image/email.png" class="contact-icon"> abc123@example.com</p>
+                </div>
+                <div class="contact-right">
+                    <p><img src="~/Image/location-pin.png" class="contact-icon"> 123 abc, def, uia 62704, Vn</p>
+                    <p><img src="~/Image/clock.png" class="contact-icon"> 24/7</p>
+                </div>
+            </div>
+            <div class="footer-word">
+                <p>© 2025 Luxury Hotel. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <div class="footer-bottom">
+        <div class="social-icon">
+            <img src="~/Image/instagram.png" class="footer-icon">
+            <img src="~/Image/tik-tok.png" class="footer-icon">
+            <img src="~/Image/snapchat.png" class="footer-icon">
+            <img src="~/Image/twitter.png" class="footer-icon">
+            <img src="~/Image/youtube.png" class="footer-icon">
+            <img src="~/Image/facebook.png" class="footer-icon">
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+﻿@model CNPM_Luxury.Model.TienIch
+
+@{
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Chi tiết tiện ích</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap 4.6 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+        body {
+            background-color: #e9f4fb;
+        }
+
+        .card {
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border: none;
+        }
+
+        .card-header {
+            background-color: #17a2b8;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4><i class="fas fa-info-circle"></i> Thông tin chi tiết tiện ích</h4>
+                    </div>
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-4"><i class="fas fa-hashtag"></i> ID tiện ích</dt>
+                            <dd class="col-sm-8">@Model.ID_TienIch</dd>
+
+                            <dt class="col-sm-4"><i class="fas fa-puzzle-piece"></i> Tên tiện ích</dt>
+                            <dd class="col-sm-8">@Html.DisplayFor(model => model.TenTienIch)</dd>
+                        </dl>
+
+                        <div class="text-right mt-4">
+                            @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.ID_TienIch }, new { @class = "btn btn-warning mr-2" })
+                            @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-secondary" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
