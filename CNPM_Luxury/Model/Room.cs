@@ -19,7 +19,8 @@ namespace CNPM_Luxury.Model
         {
             this.BaoCaoTinhTrangs = new HashSet<BaoCaoTinhTrang>();
             this.Bookings = new HashSet<Booking>();
-            this.TienIches = new HashSet<TienIch>();
+            this.Phong_TienIch = new HashSet<Phong_TienIch>();
+            this.Phong_TienIch1 = new HashSet<Phong_TienIch>();
         }
     
         public string Ma_Phong { get; set; }
@@ -35,8 +36,10 @@ namespace CNPM_Luxury.Model
         public virtual ICollection<BaoCaoTinhTrang> BaoCaoTinhTrangs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Booking> Bookings { get; set; }
-        public virtual Trang_Thai Trang_Thai { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TienIch> TienIches { get; set; }
+        public virtual ICollection<Phong_TienIch> Phong_TienIch { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Phong_TienIch> Phong_TienIch1 { get; set; }
+        public virtual Trang_Thai Trang_Thai { get; set; }
     }
 }

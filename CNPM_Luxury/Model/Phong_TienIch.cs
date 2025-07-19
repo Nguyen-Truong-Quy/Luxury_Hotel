@@ -12,18 +12,14 @@ namespace CNPM_Luxury.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class TienIch
+    public partial class Phong_TienIch
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TienIch()
-        {
-            this.Phong_TienIch = new HashSet<Phong_TienIch>();
-        }
-    
+        public string Ma_Phong { get; set; }
         public int ID_TienIch { get; set; }
-        public string TenTienIch { get; set; }
+        public Nullable<System.DateTime> Ngay_Them_Tien_Ich_Phong { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Phong_TienIch> Phong_TienIch { get; set; }
+        public virtual TienIch TienIch { get; set; }
+        public virtual Room Room { get; set; }
+        public virtual Room Room1 { get; set; }
     }
 }

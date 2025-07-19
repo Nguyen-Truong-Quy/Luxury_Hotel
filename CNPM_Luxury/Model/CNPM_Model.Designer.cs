@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'E:\CNPM_Project_LuxuryHotel\CNPM_Luxury\Model\CNPM_Model.edmx'. 
+﻿// T4 code generation is enabled for model 'E:\Luxury_Hotel\CNPM_Luxury\Model\CNPM_Model.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

@@ -10,117 +10,112 @@ using CNPM_Luxury.Model;
 
 namespace CNPM_Luxury.Areas.Admin.Controllers
 {
-    public class Trang_ThaiController : Controller
+    public class DichVuPhuThuController : Controller
     {
         private Luxury_HotelEntities db = new Luxury_HotelEntities();
 
-        // GET: Admin/Trang_Thai
+        // GET: Admin/DichVuPhuThu
         public ActionResult Index()
         {
-            return View(db.Trang_Thai.ToList());
+            var dichVuPhuThus = db.DichVuPhuThus.Include(d => d.Trang_Thai);
+            return View(dichVuPhuThus.ToList());
         }
 
-        // GET: Admin/Trang_Thai/Details/5
-        public ActionResult Details(int? id)
+        // GET: Admin/DichVuPhuThu/Details/5
+        public ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Trang_Thai trang_Thai = db.Trang_Thai.Find(id);
-            if (trang_Thai == null)
+            DichVuPhuThu dichVuPhuThu = db.DichVuPhuThus.Find(id);
+            if (dichVuPhuThu == null)
             {
                 return HttpNotFound();
             }
-            return View(trang_Thai);
+            return View(dichVuPhuThu);
         }
 
-        // GET: Admin/Trang_Thai/Create
+        // GET: Admin/DichVuPhuThu/Create
         public ActionResult Create()
         {
+            ViewBag.ID_Trang_Thai = new SelectList(db.Trang_Thai, "ID_Trang_Thai", "Ten_Trang_Thai");
             return View();
         }
 
-        // POST: Admin/Trang_Thai/Create
+        // POST: Admin/DichVuPhuThu/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID_Trang_Thai,Ten_Trang_Thai,LoaiTrangThai")] Trang_Thai trang_Thai)
+        public ActionResult Create([Bind(Include = "ID_DichVu,Ten_DichVu,Gia_DichVu,ThoiGianMo,ThoiGianKetThuc,ID_Trang_Thai")] DichVuPhuThu dichVuPhuThu)
         {
-            // Kiểm tra trùng tên trạng thái (không phân biệt hoa thường)
-            bool tenBiTrung = db.Trang_Thai
-                                .Any(t => t.Ten_Trang_Thai.Trim().ToLower() == trang_Thai.Ten_Trang_Thai.Trim().ToLower());
-
-            if (tenBiTrung)
-            {
-                ModelState.AddModelError("Ten_Trang_Thai", "Tên trạng thái đã tồn tại.");
-            }
-
             if (ModelState.IsValid)
             {
-                db.Trang_Thai.Add(trang_Thai);
+                db.DichVuPhuThus.Add(dichVuPhuThu);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(trang_Thai);
+            ViewBag.ID_Trang_Thai = new SelectList(db.Trang_Thai, "ID_Trang_Thai", "Ten_Trang_Thai", dichVuPhuThu.ID_Trang_Thai);
+            return View(dichVuPhuThu);
         }
 
-
-        // GET: Admin/Trang_Thai/Edit/5
-        public ActionResult Edit(int? id)
+        // GET: Admin/DichVuPhuThu/Edit/5
+        public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Trang_Thai trang_Thai = db.Trang_Thai.Find(id);
-            if (trang_Thai == null)
+            DichVuPhuThu dichVuPhuThu = db.DichVuPhuThus.Find(id);
+            if (dichVuPhuThu == null)
             {
                 return HttpNotFound();
             }
-            return View(trang_Thai);
+            ViewBag.ID_Trang_Thai = new SelectList(db.Trang_Thai, "ID_Trang_Thai", "Ten_Trang_Thai", dichVuPhuThu.ID_Trang_Thai);
+            return View(dichVuPhuThu);
         }
 
-        // POST: Admin/Trang_Thai/Edit/5
+        // POST: Admin/DichVuPhuThu/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID_Trang_Thai,Ten_Trang_Thai,LoaiTrangThai")] Trang_Thai trang_Thai)
+        public ActionResult Edit([Bind(Include = "ID_DichVu,Ten_DichVu,Gia_DichVu,ThoiGianMo,ThoiGianKetThuc,ID_Trang_Thai")] DichVuPhuThu dichVuPhuThu)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(trang_Thai).State = EntityState.Modified;
+                db.Entry(dichVuPhuThu).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(trang_Thai);
+            ViewBag.ID_Trang_Thai = new SelectList(db.Trang_Thai, "ID_Trang_Thai", "Ten_Trang_Thai", dichVuPhuThu.ID_Trang_Thai);
+            return View(dichVuPhuThu);
         }
 
-        // GET: Admin/Trang_Thai/Delete/5
-        public ActionResult Delete(int? id)
+        // GET: Admin/DichVuPhuThu/Delete/5
+        public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Trang_Thai trang_Thai = db.Trang_Thai.Find(id);
-            if (trang_Thai == null)
+            DichVuPhuThu dichVuPhuThu = db.DichVuPhuThus.Find(id);
+            if (dichVuPhuThu == null)
             {
                 return HttpNotFound();
             }
-            return View(trang_Thai);
+            return View(dichVuPhuThu);
         }
 
-        // POST: Admin/Trang_Thai/Delete/5
+        // POST: Admin/DichVuPhuThu/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(string id)
         {
-            Trang_Thai trang_Thai = db.Trang_Thai.Find(id);
-            db.Trang_Thai.Remove(trang_Thai);
+            DichVuPhuThu dichVuPhuThu = db.DichVuPhuThus.Find(id);
+            db.DichVuPhuThus.Remove(dichVuPhuThu);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

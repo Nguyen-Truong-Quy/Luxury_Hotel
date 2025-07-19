@@ -30,8 +30,10 @@ namespace CNPM_Luxury.Model
         public virtual DbSet<ChiTietHoaDon> ChiTietHoaDons { get; set; }
         public virtual DbSet<DanhGia> DanhGias { get; set; }
         public virtual DbSet<DichVuPhuThu> DichVuPhuThus { get; set; }
+        public virtual DbSet<Phong_TienIch> Phong_TienIch { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<ThanhToan> ThanhToans { get; set; }
         public virtual DbSet<TienIch> TienIches { get; set; }
         public virtual DbSet<Trang_Thai> Trang_Thai { get; set; }

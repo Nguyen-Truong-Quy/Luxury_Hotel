@@ -1,0 +1,40 @@
+﻿@model CNPM_Luxury.ViewModel.PhongTienIchViewModel
+
+@{
+    ViewBag.Title = "Gán Tiện Ích Cho Phòng";
+}
+
+<h3>Gán Tiện Ích Cho Phòng @Model.Ma_Phong</h3>
+
+@using (Html.BeginForm("GanTienIch", "Phong_TienIch", FormMethod.Post))
+{
+    @Html.HiddenFor(m => m.Ma_Phong)
+
+    <div class="form-group">
+        <label>Chọn các tiện ích:</label>
+        <div class="row">
+            @for (int i = 0; i < Model.AvailableTienIch.Count; i++)
+            {
+                var tienIch = Model.AvailableTienIch[i];
+                var isChecked = Model.SelectedTienIchIds != null && Model.SelectedTienIchIds.Contains(int.Parse(tienIch.Value));
+
+                <div class="col-md-4">
+                    <div class="form-check">
+                        <input type="checkbox"
+                               name="SelectedTienIchIds"
+                               value="@tienIch.Value"
+                               class="form-check-input"
+                               id="tienich_@tienIch.Value"
+                               @(isChecked ? "checked" : "") />
+
+                        <label class="form-check-label" for="tienich_@tienIch.Value">
+                            @tienIch.Text
+                        </label>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success mt-3">Lưu tiện ích</button>
+}

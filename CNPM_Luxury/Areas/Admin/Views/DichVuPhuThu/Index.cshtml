@@ -1,0 +1,58 @@
+﻿@model IEnumerable<CNPM_Luxury.Model.DichVuPhuThu>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Ten_DichVu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gia_DichVu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ThoiGianMo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ThoiGianKetThuc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Trang_Thai.Ten_Trang_Thai)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ten_DichVu)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Gia_DichVu)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ThoiGianMo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ThoiGianKetThuc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Trang_Thai.Ten_Trang_Thai)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID_DichVu }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID_DichVu }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID_DichVu })
+        </td>
+    </tr>
+}
+
+</table>

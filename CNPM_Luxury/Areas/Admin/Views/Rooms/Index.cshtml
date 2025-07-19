@@ -18,6 +18,9 @@
     <table class="table">
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.Ma_Phong)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Ten_Phong)
             </th>
             <th>
@@ -40,38 +43,52 @@
             </th>
             <th></th>
         </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ten_Phong)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Mo_Ta)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gia_Phong)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Dia_Diem)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.So_Nguoi)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Anh_Phong)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Trang_Thai.Ten_Trang_Thai)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Ma_Phong }) |
-                @Html.ActionLink("Details", "Details", new { id=item.Ma_Phong }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.Ma_Phong })
-            </td>
-        </tr>
-    }
-    
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ma_Phong)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ten_Phong)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Mo_Ta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gia_Phong)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Dia_Diem)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.So_Nguoi)
+                </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.Anh_Phong))
+                    {
+                        <img src="@Url.Content(item.Anh_Phong)" style="width: 150px;" />
+                    }
+                    else
+                    {
+                        <span>Không có ảnh</span>
+                    }
+
+                </td>
+
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Trang_Thai.Ten_Trang_Thai)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Ma_Phong }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Ma_Phong }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Ma_Phong })
+                </td>
+            </tr>
+        }
+
     </table>
 </body>
 </html>

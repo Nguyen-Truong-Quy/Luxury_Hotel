@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -39,44 +41,81 @@ namespace CNPM_Luxury.Areas.Admin.Controllers
         // GET: Admin/Rooms/Create
         public ActionResult Create()
         {
-            ViewBag.ID_Trang_Thai = new SelectList(db.Trang_Thai, "ID_Trang_Thai", "Ten_Trang_Thai");
+            ViewBag.ID_Trang_Thai = new SelectList(db.Trang_Thai.Where(t => t.LoaiTrangThai == "Phòng"), "ID_Trang_Thai", "Ten_Trang_Thai");
             return View();
         }
+
 
         // POST: Admin/Rooms/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Ten_Phong,Mo_Ta,Gia_Phong,Dia_Diem,So_Nguoi,Anh_Phong,ID_Trang_Thai")] Room room)
+        public ActionResult Create([Bind(Include = "Ten_Phong,Mo_Ta,Gia_Phong,Dia_Diem,So_Nguoi,ID_Trang_Thai")] Room room, HttpPostedFileBase ImageUpload)
         {
-            if (ModelState.IsValid)
+            // Lấy mã phòng cuối cùng trong CSDL theo thứ tự giảm dần
+            var lastRoom = db.Rooms
+                .OrderByDescending(r => r.Ma_Phong)
+                .FirstOrDefault();
+
+            // Tạo số thứ tự mới
+            int nextIndex = 1; // mặc định nếu chưa có phòng nào
+
+            if (lastRoom != null && lastRoom.Ma_Phong.StartsWith("Phong"))
             {
-                // Sinh mã tự động
-                var lastRoom = db.Rooms
-                                 .OrderByDescending(r => r.Ma_Phong)
-                                 .FirstOrDefault();
-
-                string newCode = "MaPH001"; // mặc định nếu chưa có phòng
-
-                if (lastRoom != null)
-                {
-                    // Cắt số cuối + tăng lên
-                    string lastCode = lastRoom.Ma_Phong;
-                    int numberPart = int.Parse(lastCode.Substring(4)); // "MaPH005" -> 5
-                    newCode = "MaPH" + (numberPart + 1).ToString("D3"); // -> MaPH006
-                }
-
-                room.Ma_Phong = newCode;
-
-                db.Rooms.Add(room);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                string lastNumber = lastRoom.Ma_Phong.Substring(5); // lấy phần số, sau "Phong"
+                if (int.TryParse(lastNumber, out int num))
+                    nextIndex = num + 1;
             }
 
-            ViewBag.ID_Trang_Thai = new SelectList(db.Trang_Thai, "ID_Trang_Thai", "Ten_Trang_Thai", room.ID_Trang_Thai);
+            // Tạo mã mới với định dạng Phong001
+            room.Ma_Phong = "Phong" + nextIndex.ToString("D3"); // D3 = 3 chữ số
+            if (room.So_Nguoi <= 0)
+                ModelState.AddModelError("So_Nguoi", "Số người phải lớn hơn 0");
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (ImageUpload != null && ImageUpload.ContentLength > 0)
+                    {
+                        var folderPath = Server.MapPath("~/Image/Room");
+                        if (!Directory.Exists(folderPath))
+                            Directory.CreateDirectory(folderPath);
+
+                        var fileName = Path.GetFileName(ImageUpload.FileName);
+                        var uniqueName = Guid.NewGuid().ToString() + "_" + fileName;
+                        var fullPath = Path.Combine(folderPath, uniqueName);
+                        ImageUpload.SaveAs(fullPath);
+
+                        room.Anh_Phong = "~/Image/Room/" + uniqueName;
+                    }
+                    else
+                    {
+                        room.Anh_Phong = "~/Image/Room/default.png"; // ảnh mặc định nếu không upload
+                    }
+
+
+                    db.Rooms.Add(room);
+                    db.SaveChanges();
+                    return RedirectToAction("GanTienIch", "Phong_TienIch", new { maPhong = room.Ma_Phong });
+
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    foreach (var errorSet in ex.EntityValidationErrors)
+                    {
+                        foreach (var error in errorSet.ValidationErrors)
+                        {
+                            ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                        }
+                    }
+                }
+            }
+
+            ViewBag.ID_Trang_Thai = new SelectList(db.Trang_Thai.Where(t => t.LoaiTrangThai == "Phòng"), "ID_Trang_Thai", "Ten_Trang_Thai", room.ID_Trang_Thai);
             return View(room);
         }
+
 
         // GET: Admin/Rooms/Edit/5
         public ActionResult Edit(string id)

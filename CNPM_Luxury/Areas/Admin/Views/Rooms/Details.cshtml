@@ -2,81 +2,65 @@
 
 @{
     Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+    ViewBag.Title = "Chi tiết phòng";
 }
 
-<!DOCTYPE html>
+<div class="container mt-4">
+    <div class="card shadow rounded p-4">
+        <h2 class="mb-4 text-primary">Chi tiết phòng - @Model.Ten_Phong</h2>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
-    <div>
-        <h4>Room</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Ten_Phong)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Ten_Phong)
+        <dl class="row">
+            <dt class="col-sm-3">Tên phòng</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Ten_Phong)</dd>
+
+            <dt class="col-sm-3">Mô tả</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Mo_Ta)</dd>
+
+            <dt class="col-sm-3">Giá phòng</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Gia_Phong) VNĐ</dd>
+
+            <dt class="col-sm-3">Địa điểm</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Dia_Diem)</dd>
+
+            <dt class="col-sm-3">Số người</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.So_Nguoi)</dd>
+
+            <dt class="col-sm-3">Ảnh phòng</dt>
+            <dd class="col-sm-9">
+                @if (!string.IsNullOrEmpty(Model.Anh_Phong))
+                {
+                    <img src="@Url.Content(Model.Anh_Phong)" alt="Ảnh phòng" class="img-fluid rounded shadow" style="max-width: 300px;" />
+                }
+                else
+                {
+                    <span class="text-muted">Chưa có ảnh</span>
+                }
             </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Mo_Ta)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Mo_Ta)
+
+            <dt class="col-sm-3">Trạng thái</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Trang_Thai.Ten_Trang_Thai)</dd>
+
+            <dt class="col-sm-3">Tiện ích đi kèm</dt>
+            <dd class="col-sm-9">
+                @if (Model.Phong_TienIch != null && Model.Phong_TienIch.Any())
+                {
+                    <ul class="list-unstyled">
+                        @foreach (var item in Model.Phong_TienIch)
+                        {
+                            <li>• @item.TienIch.TenTienIch</li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <span class="text-muted">Không có tiện ích nào</span>
+                }
             </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Gia_Phong)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Gia_Phong)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Dia_Diem)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Dia_Diem)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.So_Nguoi)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.So_Nguoi)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Anh_Phong)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Anh_Phong)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Trang_Thai.Ten_Trang_Thai)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Trang_Thai.Ten_Trang_Thai)
-            </dd>
-    
         </dl>
+
+        <div class="mt-4">
+            @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.Ma_Phong }, new { @class = "btn btn-warning me-2" })
+            @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-secondary" })
+        </div>
     </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Ma_Phong }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-</body>
-</html>
+</div>
