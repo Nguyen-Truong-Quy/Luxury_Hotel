@@ -1,0 +1,118 @@
+﻿@model IEnumerable<CNPM_Luxury.Model.Room>
+
+@{
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+    ViewBag.Title = "Kết quả tìm kiếm phòng";
+}
+
+<style>
+    .search-header {
+        background: linear-gradient(to right, #264653, #2a9d8f);
+        padding: 40px 20px;
+        color: white;
+        text-align: center;
+        border-radius: 0 0 30px 30px;
+    }
+
+        .search-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .search-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+    .room-card {
+        border: none;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background: white;
+    }
+
+        .room-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+    .room-img {
+        width: 100%;
+        height: 210px;
+        object-fit: cover;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .card-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #264653;
+    }
+
+    .price {
+        color: #e76f51;
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+
+    .location {
+        color: #6c757d;
+        font-size: 0.95rem;
+        margin-bottom: 10px;
+    }
+
+    .btn-view {
+        background-color: #2a9d8f;
+        color: white;
+        border-radius: 20px;
+        padding: 6px 18px;
+        font-weight: 500;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+    }
+
+        .btn-view:hover {
+            background-color: #1f7a6d;
+            color: #fff;
+        }
+</style>
+
+<div class="search-header">
+    <h2>Kết quả tìm kiếm phòng</h2>
+    <p>@Model.Count() phòng được tìm thấy phù hợp với yêu cầu của bạn.</p>
+</div>
+
+<div class="container py-5">
+    <div class="row">
+        @if (!Model.Any())
+        {
+            <div class="col-12 text-center">
+                <h4>Không tìm thấy phòng nào phù hợp.</h4>
+                <p>Vui lòng thử lại với các tiêu chí khác.</p>
+            </div>
+        }
+        else
+        {
+            foreach (var room in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card room-card">
+                        <img src="@Url.Content(room.Anh_Phong ?? "~/Image/Room/default.png")" class="room-img" alt="@room.Ten_Phong" />
+                        <div class="card-body">
+                            <h5 class="card-title">@room.Ten_Phong</h5>
+                            <div class="price">@room.Gia_Phong.ToString("N0") VNĐ / đêm</div>
+                            <div class="location"><i class="bi bi-geo-alt-fill"></i> @room.Dia_Diem</div>
+                            <a href="@Url.Action("ChiTietPhong", "Home", new { id = room.Ma_Phong })" class="btn btn-view">Xem chi tiết</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

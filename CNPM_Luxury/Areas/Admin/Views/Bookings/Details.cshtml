@@ -1,0 +1,67 @@
+﻿@model CNPM_Luxury.Model.Booking
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Booking</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CheckInDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CheckInDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CheckOutDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CheckOutDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ngay_Tao_Don)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ngay_Tao_Don)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Trang_Thai.Ten_Trang_Thai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Trang_Thai.Ten_Trang_Thai)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Room.Ten_Phong)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Room.Ten_Phong)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.BookingID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

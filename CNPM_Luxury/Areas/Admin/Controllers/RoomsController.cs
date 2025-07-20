@@ -184,5 +184,22 @@ namespace CNPM_Luxury.Areas.Admin.Controllers
             }
             base.Dispose(disposing);
         }
+        [HttpPost]
+        public ActionResult SearchResult(string Dia_Diem, DateTime checkIn, DateTime checkOut, int So_Nguoi)
+        {
+            // Giả sử bạn có DbContext là db
+            var rooms = db.Rooms.Where(r =>
+                r.Dia_Diem == Dia_Diem &&
+                r.So_Nguoi >= So_Nguoi 
+              
+                     )
+            .ToList();
+
+            ViewBag.DiaDiem = Dia_Diem;
+            ViewBag.SoNguoi = So_Nguoi;
+
+            return View(rooms); // Trả về view kết quả với danh sách phòng phù hợp
+        }
+
     }
 }

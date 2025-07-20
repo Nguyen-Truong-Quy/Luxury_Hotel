@@ -85,6 +85,53 @@ namespace CNPM_Luxury.Controllers
         {
             return View();
         }
+        // GET: Home/SearchingRoom
+        public ActionResult SearchingRoom()
+        {
+            // Chuẩn bị dữ liệu cho dropdown
+            ViewBag.DiaDiems = new SelectList(db.Rooms.Select(r => r.Dia_Diem).Distinct(), "Chọn địa điểm");
+            ViewBag.SoKhachList = new SelectList(db.Rooms.Select(r => r.So_Nguoi).Distinct(), "Chọn số khách");
+            ViewBag.CheckIn = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd");
+            ViewBag.CheckOut = DateTime.Now.AddDays(2).ToString("yyyy-MM-dd");
+            return View();
+        }
+
+        // POST: Home/SearchResult
+        [HttpPost]
+        public ActionResult SearchResult(string Dia_Diem, int? So_Nguoi, DateTime checkIn, DateTime checkOut)
+        {
+            // Kiểm tra ngày
+            if (checkIn < DateTime.Now.Date)
+            {
+                ModelState.AddModelError("checkIn", "Ngày nhận phòng phải lớn hơn hoặc bằng ngày hiện tại.");
+            }
+            if (checkOut <= checkIn)
+            {
+                ModelState.AddModelError("checkOut", "Ngày trả phòng phải lớn hơn ngày nhận phòng.");
+            }
+            if (!ModelState.IsValid)
+            {
+                ViewBag.DiaDiems = new SelectList(db.Rooms.Select(r => r.Dia_Diem).Distinct(), Dia_Diem);
+                ViewBag.SoKhachList = new SelectList(db.Rooms.Select(r => r.So_Nguoi).Distinct(), So_Nguoi.ToString());
+                ViewBag.CheckIn = checkIn.ToString("yyyy-MM-dd");
+                ViewBag.CheckOut = checkOut.ToString("yyyy-MM-dd");
+                return View("SearchingRoom");
+            }
+
+            // Lưu vào TempData
+            TempData["CheckInDate"] = checkIn;
+            TempData["CheckOutDate"] = checkOut;
+            TempData["Dia_Diem"] = Dia_Diem;
+            TempData["So_Nguoi"] = So_Nguoi;
+
+            // Lọc phòng theo Dia_Diem và So_Nguoi
+            var rooms = db.Rooms
+                .Where(r => (string.IsNullOrEmpty(Dia_Diem) || r.Dia_Diem == Dia_Diem) &&
+                            (!So_Nguoi.HasValue || r.So_Nguoi >= So_Nguoi))
+                .ToList();
+
+            return View("SearchResult", rooms);
+        }
 
 
 

@@ -80,18 +80,18 @@
         gap: 10px;
     }
 
-    .amenities-list li {
-        position: relative;
-        padding-left: 20px;
-    }
+        .amenities-list li {
+            position: relative;
+            padding-left: 20px;
+        }
 
-    .amenities-list li:before {
-        content: "•";
-        color: #2a9d8f;
-        font-weight: bold;
-        position: absolute;
-        left: 0;
-    }
+            .amenities-list li:before {
+                content: "•";
+                color: #2a9d8f;
+                font-weight: bold;
+                position: absolute;
+                left: 0;
+            }
 
     .room-buttons {
         margin-top: 30px;
@@ -110,10 +110,10 @@
         transition: all 0.3s ease;
     }
 
-    .btn-datphong:hover {
-        background-color: #264653;
-        transform: translateY(-3px);
-    }
+        .btn-datphong:hover {
+            background-color: #264653;
+            transform: translateY(-3px);
+        }
 
     .btn-outline-secondary {
         font-size: 1.2rem;
@@ -125,11 +125,11 @@
         transition: all 0.3s ease;
     }
 
-    .btn-outline-secondary:hover {
-        background-color: #e9ecef;
-        color: #264653;
-        transform: translateY(-3px);
-    }
+        .btn-outline-secondary:hover {
+            background-color: #e9ecef;
+            color: #264653;
+            transform: translateY(-3px);
+        }
 
     .clicked {
         background-color: #2ecc71 !important;
@@ -137,9 +137,20 @@
     }
 
     keyframes pulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.05); }
-        100% { transform: scale(1); }
+        0%
+
+    {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+
     }
 
     /* Modal Styles */
@@ -171,27 +182,27 @@
         cursor: pointer;
     }
 
-    .close:hover,
-    .close:focus {
-        color: #000;
-        text-decoration: none;
-    }
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+        }
 
     .form-group {
         margin-bottom: 15px;
     }
 
-    .form-group label {
-        font-weight: 500;
-        color: #1a2a44;
-    }
+        .form-group label {
+            font-weight: 500;
+            color: #1a2a44;
+        }
 
-    .form-group input {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ced4da;
-        border-radius: 5px;
-    }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+        }
 
     .btn-submit-modal {
         background-color: #2a9d8f;
@@ -202,12 +213,18 @@
         transition: background-color 0.3s ease;
     }
 
-    .btn-submit-modal:hover {
-        background-color: #264653;
-    }
+        .btn-submit-modal:hover {
+            background-color: #264653;
+        }
 </style>
 
 <div class="room-detail-container">
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["Error"]
+        </div>
+    }
     <div class="img-wrapper">
         <img src="@Url.Content(Model.Room.Anh_Phong ?? "~/images/no-image.png")" class="room-img" alt="@Model.Room.Ten_Phong" />
     </div>
@@ -246,16 +263,12 @@
 <!-- Modal -->
 <div id="bookingModal" class="modal">
     <div class="modal-content">
-        <span class="close">&times;</span>
+        <span class="close">×</span>
         <h3 class="text-center mb-3">Nhập thông tin đặt phòng</h3>
         <form id="bookingForm" method="post" action="@Url.Action("BookRoom", "Booking")">
             <div class="form-group">
                 <label for="Email">Email:</label>
                 <input type="email" id="Email" name="Email" required />
-            </div>
-            <div class="form-group">
-                <label for="Password">Mật khẩu:</label>
-                <input type="password" id="Password" name="Password" required />
             </div>
             <div class="form-group">
                 <label for="HO_TEN_KH">Họ và tên:</label>
@@ -266,15 +279,14 @@
                 <input type="tel" id="SDT_KH" name="SDT_KH" required pattern="[0-9]{10}" />
             </div>
             <input type="hidden" name="Ma_Phong" value="@Model.Room.Ma_Phong" />
-            <input type="hidden" name="CheckInDate" value="@DateTime.Now.AddDays(1).ToString("yyyy-MM-ddTHH:mm")" />
-            <input type="hidden" name="CheckOutDate" value="@DateTime.Now.AddDays(2).ToString("yyyy-MM-ddTHH:mm")" />
+            <input type="hidden" name="CheckInDate" value="@((TempData["CheckInDate"] is DateTime checkIn ? checkIn.ToString("yyyy-MM-ddTHH:mm") : DateTime.Now.AddDays(1).ToString("yyyy-MM-ddTHH:mm")))" />
+            <input type="hidden" name="CheckOutDate" value="@((TempData["CheckOutDate"] is DateTime checkOut ? checkOut.ToString("yyyy-MM-ddTHH:mm") : DateTime.Now.AddDays(2).ToString("yyyy-MM-ddTHH:mm")))" />
             <div class="text-center">
                 <button type="submit" class="btn-submit-modal">Xác nhận</button>
             </div>
         </form>
     </div>
 </div>
-
 @section Scripts {
     <script>
         // Ảnh zoom khi rê chuột
