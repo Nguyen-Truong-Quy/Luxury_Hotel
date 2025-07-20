@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewBag.Title = "DanhSachBooking";
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+}
+
+@model List<CNPM_Luxury.Model.Booking>
+
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-primary">📋 Danh sách đơn đặt phòng của bạn</h2>
+    <p>Đang lấy danh sách đơn cho User ID: @ViewBag.Debug_UserId</p>
+
+
+    @if (Model != null && Model.Any())
+    {
+        <table class="table table-bordered table-hover shadow-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th>Mã Booking</th>
+                    <th>Phòng</th>
+                    <th>Ngày nhận</th>
+                    <th>Ngày trả</th>
+                    <th>Ngày tạo</th>
+                    <th>Tình trạng</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var booking in Model)
+                {
+                    <tr>
+                        <td>@booking.BookingID</td>
+                        <td>@booking.Room?.Ten_Phong (@booking.Ma_Phong)</td>
+                        <td>@booking.CheckInDate?.ToString("dd/MM/yyyy")</td>
+                        <td>@booking.CheckOutDate?.ToString("dd/MM/yyyy")</td>
+                        <td>@booking.Ngay_Tao_Don?.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>
+                            <span class="badge bg-info text-dark">
+                                @booking.Trang_Thai?.Ten_Trang_Thai ?? "Chưa xác định"
+                            </span>
+                        </td>
+                        <td>
+                            <a href="@Url.Action("XacNhan", "Booking", new { id = booking.BookingID })" class="btn btn-sm btn-outline-primary">Chi tiết</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-info">Không có đơn đặt phòng nào được tìm thấy.</div>
+    }
+
+    <div class="mt-4">
+        <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">⬅️ Quay lại trang chủ</a>
+    </div>
+</div>
+
+

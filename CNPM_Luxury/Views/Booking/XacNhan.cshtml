@@ -1,0 +1,66 @@
+﻿@model CNPM_Luxury.ViewModels.BookingDetailViewModel
+
+@{
+    ViewBag.Title = "Chi tiết Booking";
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+}
+
+<div class="container mt-5">
+    <h2 class="text-primary mb-4">📄 Chi tiết đơn đặt phòng</h2>
+
+    <div class="card shadow-lg mb-4">
+        <div class="row g-0">
+            <div class="col-md-4">
+                @if (!string.IsNullOrEmpty(Model.Anh_Phong))
+                {
+                    <img src="@Url.Content(Model.Anh_Phong)" class="room-img" alt="@Model.Ten_Phong" />
+                }
+                else
+                {
+                    <img src="https://via.placeholder.com/400x200?text=No+Image" class="room-img" />
+                }
+
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h4 class="card-title text-success">@Model.Ten_Phong</h4>
+                    <p class="card-text"><strong>Mã phòng:</strong> @Model.Ma_Phong</p>
+                    <p class="card-text"><strong>Địa điểm:</strong> @Model.Dia_Diem</p>
+                    <p class="card-text"><strong>Mô tả:</strong> @Model.Mo_Ta</p>
+                    <p class="card-text"><strong>Số người tối đa:</strong> @Model.So_Nguoi</p>
+                    <p class="card-text"><strong>Giá phòng:</strong> @Model.Gia_Phong.ToString("N0") VNĐ</p>
+                    <p class="card-text"><strong>Trạng thái phòng:</strong> <span class="badge bg-secondary">@Model.TrangThaiPhong</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow p-4">
+        <h5 class="text-info mb-3">📌 Thông tin đơn đặt phòng</h5>
+        <p><strong>Mã booking:</strong> @Model.BookingID</p>
+        <p><strong>Người đặt (ID):</strong> @Model.ID_User</p>
+        <p><strong>Ngày nhận phòng:</strong> @Model.CheckInDate?.ToString("dd/MM/yyyy")</p>
+        <p><strong>Ngày trả phòng:</strong> @Model.CheckOutDate?.ToString("dd/MM/yyyy")</p>
+        <p><strong>Ngày tạo đơn:</strong> @Model.Ngay_Tao_Don?.ToString("dd/MM/yyyy HH:mm")</p>
+        <p><strong>Trạng thái đơn:</strong> <span class="badge bg-info text-dark">@Model.TrangThaiBooking</span></p>
+
+        <h6 class="mt-4">✅ Tiện ích phòng:</h6>
+        @if (Model.TienIchList != null && Model.TienIchList.Any())
+        {
+            <ul class="list-group">
+                @foreach (var tienIch in Model.TienIchList)
+                {
+                    <li class="list-group-item">@tienIch</li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p>Không có tiện ích nào được liệt kê.</p>
+        }
+
+        <div class="mt-4">
+            <a href="@Url.Action("DanhSachBooking", "Booking", new { userId = Model.ID_User })" class="btn btn-outline-primary">⬅️ Quay lại danh sách đặt phòng</a>
+        </div>
+    </div>
+</div>

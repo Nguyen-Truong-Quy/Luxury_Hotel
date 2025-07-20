@@ -1,11 +1,13 @@
-﻿using System;
+﻿using CNPM_Luxury.Model;
+using System;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
-using CNPM_Luxury.Model;
-using BCrypt.Net;
-using System.Data.Entity.Validation;
-
+     using System.Data.Entity;
+using CNPM_Luxury.ViewModels;
+using System.Collections.Generic;
+using System.Net;
 namespace CNPM_Luxury.Controllers
 {
     public class BookingController : Controller
@@ -74,7 +76,7 @@ namespace CNPM_Luxury.Controllers
                 while (db.Users.Any(u => u.ID_User == newUserId))
                 {
                     userCount++;
-                    newUserId = $"User_{userCount:D3}";
+                    newUserId = $"User_{userCount:D4}";
                 }
 
                 // Gán mật khẩu mặc định
@@ -112,25 +114,60 @@ namespace CNPM_Luxury.Controllers
             var room = db.Rooms.FirstOrDefault(r => r.Ma_Phong == Ma_Phong);
             if (room == null)
             {
-                TempData["Error"] = "Mã phòng không tồn tại.";
+                TempData["Error"] = "Mã phòng không tồn tại trong hệ thống.";
                 return RedirectToAction("SearchingRoom", "Home");
             }
 
-            // Tạo đơn đặt phòng
+            // Kiểm tra trạng thái phòng (chỉ cho phép đặt nếu trạng thái là "Bình Thường" hoặc "Chưa nhận phòng")
+            if (room.ID_Trang_Thai != 2 && room.ID_Trang_Thai != 4) // 2: Bình Thường, 4: Chưa nhận phòng
+            {
+                TempData["Error"] = "Phòng hiện không khả dụng để đặt.";
+                return RedirectToAction("SearchingRoom", "Home");
+            }
+
+            // Kiểm tra xung đột đặt phòng
+            var conflictingBookings = db.Bookings
+                .Where(b => b.Ma_Phong == Ma_Phong &&
+                            ((CheckInDate >= b.CheckInDate && CheckInDate < b.CheckOutDate) ||
+                             (CheckOutDate > b.CheckInDate && CheckOutDate <= b.CheckOutDate) ||
+                             (CheckInDate <= b.CheckInDate && CheckOutDate >= b.CheckOutDate)))
+                .Any();
+            if (conflictingBookings)
+            {
+                TempData["Error"] = "Phòng đã được đặt trong khoảng thời gian này.";
+                return RedirectToAction("SearchingRoom", "Home");
+            }
+            System.Diagnostics.Debug.WriteLine("CheckInDate: " + CheckInDate);
+            System.Diagnostics.Debug.WriteLine("CheckOutDate: " + CheckOutDate);
+            System.Diagnostics.Debug.WriteLine("Ma_Phong: " + Ma_Phong);
+
+            int bookingCount = db.Bookings.Count() + 1;
+            string newBookingId = $"booking_{bookingCount:D5}";
+
+            // Kiểm tra trùng (an toàn hơn nếu có xoá dữ liệu hoặc rollback)
+            while (db.Bookings.Any(b => b.BookingID == newBookingId))
+            {
+                bookingCount++;
+                newBookingId = $"booking_{bookingCount:D5}";
+            }
+
+            // Tạo đơn đặt phòng với ID_Trang_Thai phù hợp (6: Chưa thanh toán)
             var booking = new Booking
             {
-                BookingID = Guid.NewGuid().ToString(),
+                BookingID = newBookingId,
                 ID_User = user.ID_User,
                 Ma_Phong = Ma_Phong,
                 CheckInDate = CheckInDate,
                 CheckOutDate = CheckOutDate,
                 Ngay_Tao_Don = DateTime.Now,
-                ID_Trang_Thai = 1 // Trạng thái "Chờ xác nhận"
+                ID_Trang_Thai = 1 // Sử dụng "Chưa thanh toán" cho booking
             };
 
             db.Bookings.Add(booking);
             try
             {
+                System.Diagnostics.Debug.WriteLine($"Tạo booking: ID={booking.BookingID}, User={booking.ID_User}, Phong={booking.Ma_Phong}, CheckIn={booking.CheckInDate}, CheckOut={booking.CheckOutDate}, TrangThai={booking.ID_Trang_Thai}");
+
                 db.SaveChanges();
                 System.Diagnostics.Debug.WriteLine($"Booking {booking.BookingID} created successfully.");
             }
@@ -154,12 +191,63 @@ namespace CNPM_Luxury.Controllers
 
         public ActionResult XacNhan(string id)
         {
-            var booking = db.Bookings.Find(id);
+            if (string.IsNullOrEmpty(id))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var booking = db.Bookings
+                .Include("Room.Trang_Thai")
+                .Include("Trang_Thai")
+                .Include("Room.Phong_TienIch.TienIch")
+                .FirstOrDefault(b => b.BookingID == id);
+
             if (booking == null)
-            {
                 return HttpNotFound();
-            }
-            return View(booking);
+
+            var viewModel = new BookingDetailViewModel
+            {
+                BookingID = booking.BookingID,
+                ID_User = booking.ID_User,
+                CheckInDate = booking.CheckInDate,
+                CheckOutDate = booking.CheckOutDate,
+                Ngay_Tao_Don = booking.Ngay_Tao_Don,
+                TrangThaiBooking = booking.Trang_Thai?.Ten_Trang_Thai,
+
+                Ma_Phong = booking.Room?.Ma_Phong,
+                Ten_Phong = booking.Room?.Ten_Phong,
+                Mo_Ta = booking.Room?.Mo_Ta,
+                Gia_Phong = booking.Room?.Gia_Phong ?? 0,
+                So_Nguoi = booking.Room?.So_Nguoi,
+                Dia_Diem = booking.Room?.Dia_Diem,
+                Anh_Phong = booking.Room?.Anh_Phong,
+                TrangThaiPhong = booking.Room?.Trang_Thai?.Ten_Trang_Thai,
+
+                TienIchList = booking.Room?.Phong_TienIch?
+                                  .Select(pti => pti.TienIch?.TenTienIch)
+                                  .Where(ti => !string.IsNullOrEmpty(ti))
+                                  .ToList() ?? new List<string>()
+            };
+
+            return View("XacNhan", viewModel);
         }
+
+
+        public ActionResult DanhSachBooking(string userId)
+        {
+            ViewBag.Debug_UserId = userId;
+            if (string.IsNullOrEmpty(userId))
+            {
+                return HttpNotFound("Không tìm thấy ID người dùng.");
+            }
+
+            var bookings = db.Bookings
+                             .Where(b => b.ID_User == userId)
+                             .OrderByDescending(b => b.Ngay_Tao_Don)
+                             .ToList();
+
+            return View(bookings);
+        }
+
+
+
     }
 }
