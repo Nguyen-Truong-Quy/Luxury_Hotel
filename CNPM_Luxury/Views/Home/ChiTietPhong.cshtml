@@ -1,14 +1,326 @@
-﻿@model CNPM_Luxury.Models.PhongModels
-<h2>Chi tiết phòng</h2>
+﻿@model CNPM_Luxury.ViewModel.RoomDetailViewModel
 
-<link rel="stylesheet" href="~/Content/phong.css" />
+@{
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+    ViewBag.Title = "Chi tiết phòng";
+}
 
-<div class="room-detail">
-    <img src="@Url.Content(Model.HinhAnh)" class="room-detail-img" />
-    <div class="room-info">
-        <h2>@Model.TenPhong</h2>
-        <p>@Model.MoTa</p>
-        <p><strong>Giá:</strong> @string.Format("{0:N0}", Model.Gia) VNĐ</p>
-        <button class="btn-datphong">Đặt phòng</button>
+<style>
+    .room-detail-container {
+        max-width: 1000px;
+        margin: 40px auto;
+        padding: 35px;
+        background: #f8f9fa;
+        border-radius: 15px;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .img-wrapper {
+        overflow: hidden;
+        border-radius: 10px;
+    }
+
+    .room-img {
+        width: 100%;
+        height: 450px;
+        object-fit: cover;
+        border-radius: 10px;
+        transition: transform 0.4s ease;
+    }
+
+    .room-title {
+        font-size: 2.6rem;
+        font-weight: 700;
+        color: #1a2a44;
+        margin-top: 25px;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .room-description {
+        text-align: center;
+        font-size: 1.2rem;
+        color: #666;
+        margin-bottom: 25px;
+        line-height: 1.8;
+    }
+
+    .room-meta {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px 50px;
+        font-size: 1.1rem;
+        margin: 25px 0;
+        padding: 20px;
+        background: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .price {
+        color: #e63946;
+        font-weight: 600;
+        font-size: 1.3rem;
+    }
+
+    .status {
+        font-weight: 500;
+        color: #2a9d8f;
+    }
+
+    .amenities-list {
+        list-style-type: none;
+        padding-left: 0;
+        margin-top: 15px;
+        color: #444;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .amenities-list li {
+        position: relative;
+        padding-left: 20px;
+    }
+
+    .amenities-list li:before {
+        content: "•";
+        color: #2a9d8f;
+        font-weight: bold;
+        position: absolute;
+        left: 0;
+    }
+
+    .room-buttons {
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .btn-datphong {
+        font-size: 1.2rem;
+        padding: 12px 40px;
+        border-radius: 25px;
+        background-color: #2a9d8f;
+        border: none;
+        color: white;
+        transition: all 0.3s ease;
+    }
+
+    .btn-datphong:hover {
+        background-color: #264653;
+        transform: translateY(-3px);
+    }
+
+    .btn-outline-secondary {
+        font-size: 1.2rem;
+        padding: 12px 40px;
+        border-radius: 25px;
+        border: 2px solid #ced4da;
+        color: #495057;
+        background: transparent;
+        transition: all 0.3s ease;
+    }
+
+    .btn-outline-secondary:hover {
+        background-color: #e9ecef;
+        color: #264653;
+        transform: translateY(-3px);
+    }
+
+    .clicked {
+        background-color: #2ecc71 !important;
+        animation: pulse 1s ease infinite;
+    }
+
+    keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+
+    /* Modal Styles */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+    }
+
+    .modal-content {
+        background-color: #fff;
+        margin: 15% auto;
+        padding: 20px;
+        border-radius: 10px;
+        width: 400px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        font-weight: 500;
+        color: #1a2a44;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+    }
+
+    .btn-submit-modal {
+        background-color: #2a9d8f;
+        border: none;
+        padding: 10px 20px;
+        color: white;
+        border-radius: 20px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-submit-modal:hover {
+        background-color: #264653;
+    }
+</style>
+
+<div class="room-detail-container">
+    <div class="img-wrapper">
+        <img src="@Url.Content(Model.Room.Anh_Phong ?? "~/images/no-image.png")" class="room-img" alt="@Model.Room.Ten_Phong" />
+    </div>
+
+    <h1 class="room-title">@Model.Room.Ten_Phong</h1>
+    <p class="room-description">@Model.Room.Mo_Ta</p>
+
+    <div class="room-meta">
+        <p><strong>Giá:</strong> <span class="price">@Model.Room.Gia_Phong.ToString("N0") VNĐ / đêm</span></p>
+        <p><strong>Địa điểm:</strong> <span>@Model.Room.Dia_Diem</span></p>
+        <p><strong>Số người tối đa:</strong> <span>@Model.Room.So_Nguoi</span></p>
+        <p><strong>Trạng thái:</strong> <span class="status">@(Model.Room.Trang_Thai != null ? Model.Room.Trang_Thai.Ten_Trang_Thai : "Chưa rõ")</span></p>
+    </div>
+
+    <h3>Tiện ích đi kèm:</h3>
+    <ul class="amenities-list">
+        @if (Model.TienIchList != null && Model.TienIchList.Any())
+        {
+            foreach (var item in Model.TienIchList)
+            {
+                <li>@item.TenTienIch</li>
+            }
+        }
+        else
+        {
+            <li>Không có tiện ích.</li>
+        }
+    </ul>
+
+    <div class="room-buttons">
+        <button id="btnDatPhong" class="btn btn-primary btn-datphong">Đặt phòng</button>
+        <a href="javascript:history.back()" class="btn btn-outline-secondary">Quay lại</a>
     </div>
 </div>
+
+<!-- Modal -->
+<div id="bookingModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3 class="text-center mb-3">Nhập thông tin đặt phòng</h3>
+        <form id="bookingForm" method="post" action="@Url.Action("BookRoom", "Booking")">
+            <div class="form-group">
+                <label for="Email">Email:</label>
+                <input type="email" id="Email" name="Email" required />
+            </div>
+            <div class="form-group">
+                <label for="Password">Mật khẩu:</label>
+                <input type="password" id="Password" name="Password" required />
+            </div>
+            <div class="form-group">
+                <label for="HO_TEN_KH">Họ và tên:</label>
+                <input type="text" id="HO_TEN_KH" name="HO_TEN_KH" required />
+            </div>
+            <div class="form-group">
+                <label for="SDT_KH">Số điện thoại:</label>
+                <input type="tel" id="SDT_KH" name="SDT_KH" required pattern="[0-9]{10}" />
+            </div>
+            <input type="hidden" name="Ma_Phong" value="@Model.Room.Ma_Phong" />
+            <input type="hidden" name="CheckInDate" value="@DateTime.Now.AddDays(1).ToString("yyyy-MM-ddTHH:mm")" />
+            <input type="hidden" name="CheckOutDate" value="@DateTime.Now.AddDays(2).ToString("yyyy-MM-ddTHH:mm")" />
+            <div class="text-center">
+                <button type="submit" class="btn-submit-modal">Xác nhận</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Ảnh zoom khi rê chuột
+        const img = document.querySelector('.room-img');
+        if (img) {
+            img.addEventListener('mousemove', (e) => {
+                const rect = img.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                img.style.transformOrigin = `${x}% ${y}%`;
+                img.style.transform = 'scale(1.1)';
+            });
+
+            img.addEventListener('mouseleave', () => {
+                img.style.transform = 'scale(1)';
+                img.style.transformOrigin = 'center';
+            });
+        }
+
+        // Nút đặt phòng hiển thị modal
+        const btn = document.getElementById('btnDatPhong');
+        const modal = document.getElementById('bookingModal');
+        const span = document.getElementsByClassName('close')[0];
+
+        if (btn) {
+            btn.addEventListener('click', function () {
+                this.classList.add('clicked');
+                this.innerText = 'Đang xử lý...';
+                setTimeout(() => {
+                    this.classList.remove('clicked');
+                    this.innerText = 'Đặt phòng';
+                    modal.style.display = 'block';
+                }, 1000);
+            });
+        }
+
+        if (span) {
+            span.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+        }
+
+        window.addEventListener('click', (event) => {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        });
+    </script>
+}
