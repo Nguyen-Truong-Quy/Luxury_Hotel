@@ -9,6 +9,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CNPM_Luxury.Model;
+using CNPM_Project_web.Helpers;
 
 namespace CNPM_Luxury.Areas.Admin.Controllers
 {
@@ -138,17 +139,51 @@ namespace CNPM_Luxury.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Ma_Phong,Ten_Phong,Mo_Ta,Gia_Phong,Dia_Diem,So_Nguoi,Anh_Phong,ID_Trang_Thai")] Room room)
+        public ActionResult Edit([Bind(Include = "ID_ThanhToan,BookingID,SoTien,ThoiGianThanhToan,NoiDungThanhToan,ID_Trang_Thai,AnhThanhToan")] ThanhToan thanhToan)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(room).State = EntityState.Modified;
+                db.Entry(thanhToan).State = EntityState.Modified;
                 db.SaveChanges();
+
+                // Gửi email + cập nhật trạng thái Booking nếu đã thanh toán
+                if (thanhToan.ID_Trang_Thai == 3)
+                {
+                    var booking = db.Bookings
+                        .Include("User")
+                        .Include("Room")
+                        .Include("Trang_Thai")
+                        .FirstOrDefault(b => b.BookingID == thanhToan.BookingID);
+
+                    if (booking != null)
+                    {
+                        // Cập nhật trạng thái nhận phòng (ID = 4 là "Chưa nhận phòng")
+                        booking.ID_Trang_Thai = 4;
+                        db.Entry(booking).State = EntityState.Modified;
+                        db.SaveChanges();
+
+                        // Gửi email xác nhận
+                        try
+                        {
+                            EmailService.SendBookingConfirmation(booking.User.Email, booking);
+                        }
+                        catch (Exception ex)
+                        {
+                            // Ghi log nếu cần
+                            Console.WriteLine("Lỗi khi gửi email xác nhận: " + ex.Message);
+                        }
+                    }
+                }
+
                 return RedirectToAction("Index");
             }
-            ViewBag.ID_Trang_Thai = new SelectList(db.Trang_Thai, "ID_Trang_Thai", "Ten_Trang_Thai", room.ID_Trang_Thai);
-            return View(room);
+
+            ViewBag.BookingID = new SelectList(db.Bookings, "BookingID", "ID_User", thanhToan.BookingID);
+            ViewBag.ID_Trang_Thai = new SelectList(db.Trang_Thai, "ID_Trang_Thai", "Ten_Trang_Thai", thanhToan.ID_Trang_Thai);
+            return View(thanhToan);
         }
+
+
 
         // GET: Admin/Rooms/Delete/5
         public ActionResult Delete(string id)

@@ -1,4 +1,4 @@
-﻿@*@model CNPM_Luxury.ViewModel.ThanhToanViewModel
+﻿@model CNPM_Luxury.ViewModel.ThanhToanViewModel
 
 @{
     ViewBag.Title = "Thanh toán Đơn đặt phòng";
@@ -21,32 +21,38 @@
     {
         @Html.AntiForgeryToken()
 
-<div class="card shadow p-4">
-    <h4 class="text-info mb-3">Thông tin Thanh toán</h4>
+        <div class="card shadow p-4">
+            <h4 class="text-info mb-3">Thông tin Thanh toán</h4>
 
-    <div class="mb-3">
-        <label class="form-label">Mã Booking:</label>
-        <input type="text" class="form-control" name="BookingID" value="@Model.BookingID" readonly />
-    </div>
+            <!-- Mã booking readonly -->
+            <div class="mb-3">
+                <label class="form-label">Mã Booking:</label>
+                <input type="text" class="form-control" name="BookingID" value="@Model.BookingID" readonly />
+            </div>
 
-    <div class="mb-3">
-        <label class="form-label">Số tiền (VNĐ):</label>
-        <input type="number" step="0.01" class="form-control" name="SoTien" value="@Model.SoTien" required />
-    </div>
+            <!-- Số tiền readonly nếu không cho phép sửa -->
+            <div class="mb-3">
+                <label class="form-label">Số tiền cần thanh toán (VNĐ):</label>
+                <input type="number" class="form-control" name="SoTien" value="@Model.SoTien" readonly />
+            </div>
 
-    <div class="mb-3">
-        <label class="form-label">Nội dung thanh toán:</label>
-        <input type="text" class="form-control" name="NoiDungThanhToan" value="@Model.NoiDungThanhToan" maxlength="100" required />
-    </div>
+            <!-- Nội dung thanh toán tự sinh hoặc cho người dùng nhập -->
+            <div class="mb-3">
+                <label class="form-label">Nội dung thanh toán:</label>
+                <input type="text" class="form-control" name="NoiDungThanhToan"
+                       value="Thanh toán đơn đặt phòng mã @Model.BookingID"
+                       maxlength="100" readonly />
+            </div>
 
-    <div class="mb-3">
-        <label class="form-label">Ảnh Chứng từ Thanh toán:</label>
-        <input type="file" class="form-control" name="ImageUpload" accept="image/*" required />
-        <small class="text-muted">Chỉ chấp nhận file ảnh (jpg, png, jpeg).</small>
-    </div>
+            <!-- Upload ảnh chứng từ -->
+            <div class="mb-3">
+                <label class="form-label">Ảnh Chứng từ Thanh toán:</label>
+                <input type="file" class="form-control" name="ImageUpload" accept="image/*" required />
+                <small class="text-muted">Chỉ chấp nhận file ảnh (jpg, png, jpeg).</small>
+            </div>
 
-    <button type="submit" class="btn btn-primary">Xác nhận Thanh toán</button>
-    @Html.ActionLink("Thanh toán", "ThanhToanForm", "Booking", new { BookingID = Model.BookingID }, null)
-</div>
+            <button type="submit" class="btn btn-primary">Xác nhận Thanh toán</button>
+            <a href="@Url.Action("ThanhToanForm", "Booking", new { BookingID = Model.BookingID })" class="btn btn-secondary ms-2">Xem lại Thông tin</a>
+        </div>
     }
-</div>*@
+</div>

@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "ThongTinChiTiet";
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+}
+
+@model CNPM_Luxury.ViewModel.BookingDisplayViewModel
+
+<h2>Tra cứu thông tin đặt phòng</h2>
+
+@using (Html.BeginForm("ThongTinChiTiet", "Booking", FormMethod.Get))
+{
+    <div>
+        <label for="bookingId">Nhập mã Booking:</label>
+        <input type="text" name="bookingId" id="bookingId" required />
+        <button type="submit">Xem chi tiết</button>
+    </div>
+}
+
+@if (Model != null)
+{
+    <h3>Thông tin đặt phòng</h3>
+    <p><strong>Mã KH:</strong> @Model.ID_User</p>
+    <p><strong>Tên phòng:</strong> @Model.Ten_Phong</p>
+    <p><strong>Mã phòng:</strong> @Model.Ma_Phong</p>
+    <p><strong>Thời gian ở:</strong> @Model.CheckInDate?.ToString("dd/MM/yyyy")</p>
+    <p><strong>Thời gian kết thúc:</strong> @Model.CheckOutDate?.ToString("dd/MM/yyyy")</p>
+    <p><strong>Số người:</strong> @Model.So_Nguoi</p>
+    <p><strong>Ngày tạo đơn:</strong> @Model.Ngay_Tao_Don?.ToString("dd/MM/yyyy")</p>
+    <p>
+        <strong>Tình trạng:</strong>
+        @Html.DropDownListFor(m => m.TinhTrang, new SelectList(new[] {
+            "Chờ xác nhận", "Đã xác nhận", "Đã hủy"
+        }, Model.TinhTrang), new { @class = "form-control" })
+    </p>
+
+    <button type="submit" class="btn btn-primary">Cập nhật trạng thái</button>
+}

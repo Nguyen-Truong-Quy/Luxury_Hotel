@@ -10,5 +10,6 @@ namespace CNPM_Luxury.ViewModel
     {
         public Room Room { get; set; }
         public List<TienIch> TienIchList { get; set; }
+
     }
 }

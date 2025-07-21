@@ -1,0 +1,36 @@
+﻿@model List<CNPM_Luxury.Model.Room>
+
+
+@{
+    ViewBag.Title = "Kiểm tra tình trạng phòng";
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+
+}
+
+<h2>Kiểm tra tình trạng phòng</h2>
+
+<table class="table table-striped table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th>STT</th>
+            <th>Tên Phòng</th>
+            <th>Mã Phòng</th>
+            <th>Tình Trạng</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int stt = 1;
+        }
+        @foreach (var room in Model)
+        {
+            <tr>
+                <td>@(stt++)</td>
+                <td>@room.Ten_Phong</td>
+                <td>@room.Ma_Phong</td>
+                <td>@(room.Trang_Thai?.Ten_Trang_Thai ?? "Không rõ")</td>
+            </tr>
+        }
+    </tbody>
+
+</table>

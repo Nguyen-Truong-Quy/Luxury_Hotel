@@ -22,6 +22,9 @@ namespace CNPM_Luxury.ViewModel
         public string Dia_Diem { get; set; }
         public string Anh_Phong { get; set; }
         public string TrangThaiPhong { get; set; }
+        public string TrangThaiHienTai { get; set; }
+    
+        public List<string> TrangThaiList { get; set; } = new List<string>();
 
         // Danh sách tiện ích
         public List<string> TienIchList { get; set; } = new List<string>();

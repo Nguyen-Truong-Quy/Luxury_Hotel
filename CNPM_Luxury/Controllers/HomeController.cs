@@ -132,6 +132,14 @@ namespace CNPM_Luxury.Controllers
 
             return View("SearchResult", rooms);
         }
+        public ActionResult CheckRoomStatus()
+        {
+            var phongList = db.Rooms
+                .Include(p => p.Trang_Thai)
+                .ToList();
+
+            return View(phongList); // ✅ Truyền danh sách vào View
+        }
 
 
 

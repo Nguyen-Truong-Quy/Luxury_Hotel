@@ -156,6 +156,7 @@
     <Compile Include="Areas\Admin\Controllers\Trang_ThaiController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="Controllers\BookingController.cs" />
+    <Compile Include="Helpers\EmailService.cs" />
     <Compile Include="Model\BaoCaoTinhTrang.cs">
       <DependentUpon>CNPM_Model.tt</DependentUpon>
     </Compile>
@@ -216,6 +217,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\BookingDetailViewModelUsers.cs" />
+    <Compile Include="ViewModel\BookingDisplayViewModel.cs" />
     <Compile Include="ViewModel\BookingListViewModel.cs" />
     <Compile Include="ViewModel\PhongTienIchViewModel.cs" />
     <Compile Include="ViewModel\RoomDetailViewModel.cs" />
@@ -382,6 +385,8 @@
     <Content Include="Views\Booking\KetQuaTimKiemBooking.cshtml" />
     <Content Include="Views\Booking\ThanhToan.cshtml" />
     <Content Include="Views\Booking\ThanhToanForm.cshtml" />
+    <Content Include="Views\Booking\ThongTinChiTiet.cshtml" />
+    <Content Include="Views\Home\CheckRoomStatus.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -322,7 +322,7 @@ namespace CNPM_Luxury.Controllers
 
 
         [HttpGet]
-        public ActionResult ThanhToanForm(string BookingID)
+        public ActionResult ThanhToan(string BookingID)
         {
             if (string.IsNullOrEmpty(BookingID))
             {
@@ -351,7 +351,8 @@ namespace CNPM_Luxury.Controllers
                 NoiDungThanhToan = $"Thanh toán cho phòng {room.Ten_Phong}",
                 ID_User = booking.ID_User
             };
-            return View(viewModel); // ✅ Thêm dòng này
+            return View("ThanhToanForm", viewModel);
+
 
 
         }
@@ -381,7 +382,7 @@ namespace CNPM_Luxury.Controllers
 
             try
             {
-                string folderPath = Server.MapPath("~/Image/ThanhToan");
+                string folderPath = Server.MapPath("/Image/ThanhToan");
                 if (!Directory.Exists(folderPath))
                     Directory.CreateDirectory(folderPath);
 
@@ -408,7 +409,7 @@ namespace CNPM_Luxury.Controllers
 
                 db.SaveChanges();
 
-                db.SaveChanges();
+           
 
                 TempData["Success"] = "Thanh toán đã được gửi thành công. Chờ xác nhận!";
                 return RedirectToAction("ThanhToan", new { BookingID = model.BookingID });
@@ -420,6 +421,71 @@ namespace CNPM_Luxury.Controllers
                 return RedirectToAction("ThanhToan", new { BookingID = model.BookingID });
             }
         }
+        //public ActionResult ThongTinChiTiet(string bookingId)
+        //{
+        //    if (string.IsNullOrEmpty(bookingId))
+        //        return View();
+
+        //    var booking = db.Bookings
+        //        .Include("User")
+        //        .Include("Room")
+        //        .Include("Trang_Thai")
+        //        .FirstOrDefault(b => b.BookingID == bookingId);
+
+        //    if (booking == null)
+        //    {
+        //        ViewBag.ErrorMessage = "Không tìm thấy mã booking.";
+        //        return View();
+        //    }
+
+        //    var danhSachTrangThai = db.Trang_Thai
+        //        .Where(t => t.LoaiTrangThai == "Booking")
+        //        .Select(t => new SelectListItem
+        //        {
+        //            Value = t.ID_Trang_Thai.ToString(),
+        //            Text = t.Ten_Trang_Thai
+        //        }).ToList();
+
+        //    var model = new BookingDetailViewModel
+        //    {
+        //        BookingID = booking.BookingID,
+        //        ID_User = booking.User.ID_User,
+        //        HO_TEN_KH = booking.User.HO_TEN_KH,
+        //        Ten_Phong = booking.Room.Ten_Phong,
+        //        Ma_Phong = booking.Ma_Phong,
+        //        CheckInDate = booking.CheckInDate,
+        //        CheckOutDate = booking.CheckOutDate,
+        //        Ngay_Tao_Don = booking.Ngay_Tao_Don,
+        //        So_Nguoi = booking.Room.So_Nguoi,
+        //        ID_Trang_Thai = booking.ID_Trang_Thai ?? 0,
+        //        TrangThaiList = danhSachTrangThai
+        //    };
+
+        //    return View(model);
+        //}
+        //[HttpPost]
+        //public ActionResult CapNhatTrangThai(BookingDisplayViewModel model)
+        //{
+        //    var booking = db.Bookings.FirstOrDefault(b => b.BookingID == model.BookingID);
+        //    if (booking == null)
+        //    {
+        //        ViewBag.ErrorMessage = "Không tìm thấy mã booking để cập nhật.";
+        //        return RedirectToAction("ThongTinChiTiet", new { bookingId = model.BookingID });
+        //    }
+
+        //    booking.ID_Trang_Thai = model.ID_Trang_Thai;
+        //    db.SaveChanges();
+
+        //    TempData["Success"] = "Cập nhật trạng thái thành công!";
+        //    return RedirectToAction("ThongTinChiTiet", new { bookingId = model.BookingID });
+        //}
+
+
+
+
+
+
+
 
     }
 }
