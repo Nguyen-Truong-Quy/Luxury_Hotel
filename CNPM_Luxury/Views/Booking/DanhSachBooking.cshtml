@@ -1,61 +1,128 @@
-﻿
-@{
-    ViewBag.Title = "DanhSachBooking";
+﻿@{
+    // Đảm bảo tiêu đề và layout được thiết lập đúng
+    ViewBag.Title = "Danh sách đơn đặt phòng";
     Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
 }
 
-@model List<CNPM_Luxury.Model.Booking>
-
+@model CNPM_Luxury.ViewModel.BookingListViewModel
 
 <div class="container mt-5">
-    <h2 class="mb-4 text-primary">📋 Danh sách đơn đặt phòng của bạn</h2>
-    <p>Đang lấy danh sách đơn cho User ID: @ViewBag.Debug_UserId</p>
+    <h2 class="mb-4 text-primary text-center">📋 Lịch sử Đặt phòng của bạn</h2>
+    <hr class="mb-4" />
+
+    @* Hiển thị thông báo từ TempData nếu có *@
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-triangle"></i> @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle"></i> @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @* Hiển thị User ID (chỉ để debug, có thể xóa sau) *@
+    <p class="text-muted text-center mb-4">Đang hiển thị đơn đặt phòng cho User ID: <span class="fw-bold">@ViewBag.Debug_UserId</span></p>
 
 
     @if (Model != null && Model.Any())
     {
-        <table class="table table-bordered table-hover shadow-sm">
-            <thead class="table-dark">
-                <tr>
-                    <th>Mã Booking</th>
-                    <th>Phòng</th>
-                    <th>Ngày nhận</th>
-                    <th>Ngày trả</th>
-                    <th>Ngày tạo</th>
-                    <th>Tình trạng</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var booking in Model)
-                {
+        <div class="table-responsive">
+            @* Giúp bảng cuộn trên màn hình nhỏ *@
+            <table class="table table-bordered table-striped table-hover shadow-sm caption-top">
+                <caption>Tổng số đơn đặt phòng: @Model.Count()</caption>
+                <thead class="table-dark">
                     <tr>
-                        <td>@booking.BookingID</td>
-                        <td>@booking.Room?.Ten_Phong (@booking.Ma_Phong)</td>
-                        <td>@booking.CheckInDate?.ToString("dd/MM/yyyy")</td>
-                        <td>@booking.CheckOutDate?.ToString("dd/MM/yyyy")</td>
-                        <td>@booking.Ngay_Tao_Don?.ToString("dd/MM/yyyy HH:mm")</td>
-                        <td>
-                            <span class="badge bg-info text-dark">
-                                @booking.Trang_Thai?.Ten_Trang_Thai ?? "Chưa xác định"
-                            </span>
-                        </td>
-                        <td>
-                            <a href="@Url.Action("XacNhan", "Booking", new { id = booking.BookingID })" class="btn btn-sm btn-outline-primary">Chi tiết</a>
-                        </td>
+                        <th scope="col">Mã Booking</th>
+                        <th scope="col">Phòng</th>
+                        <th scope="col">Ngày nhận</th>
+                        <th scope="col">Ngày trả</th>
+                        <th scope="col">Ngày tạo</th>
+                        <th scope="col">Tình trạng</th>
+                        <th scope="col" class="text-center">Hành động</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var booking in Model)
+                    {
+                        <tr>
+                            <td>
+                                <span class="fw-bold text-primary">@booking.BookingID</span>
+                            </td>
+                            <td>
+                                @booking.Room?.Ten_Phong <br />
+                                <small class="text-muted">(@booking.Ma_Phong)</small>
+                            </td>
+                            <td>@booking.CheckInDate?.ToString("dd/MM/yyyy")</td>
+                            <td>@booking.CheckOutDate?.ToString("dd/MM/yyyy")</td>
+                            <td>@booking.Ngay_Tao_Don?.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>
+                                @{
+                                    string badgeClass = "";
+                                    switch (booking.Trang_Thai?.Ten_Trang_Thai)
+                                    {
+                                        case "Đã xác nhận":
+                                            badgeClass = "bg-success";
+                                            break;
+                                        case "Chờ xác nhận":
+                                            badgeClass = "bg-warning text-dark";
+                                            break;
+                                        case "Đã hủy":
+                                            badgeClass = "bg-danger";
+                                            break;
+                                        case "Đã hoàn thành":
+                                            badgeClass = "bg-primary";
+                                            break;
+                                        default:
+                                            badgeClass = "bg-secondary";
+                                            break;
+                                    }
+                                }
+                                <span class="badge @badgeClass">
+                                    @booking.Trang_Thai?.Ten_Trang_Thai ?? "Chưa xác định"
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <a href="@Url.Action("XacNhan", "Booking", new { id = booking.BookingID })" class="btn btn-sm btn-outline-primary" title="Xem chi tiết">
+                                    <i class="fas fa-info-circle"></i> Chi tiết
+                                </a>
+                                @* Thêm các nút hành động khác nếu cần (ví dụ: hủy, sửa) *@
+                                @*
+                                    <a href="#" class="btn btn-sm btn-outline-danger ms-2" title="Hủy đặt phòng">
+                                        <i class="fas fa-times-circle"></i> Hủy
+                                    </a>
+                                *@
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     }
     else
     {
-        <div class="alert alert-info">Không có đơn đặt phòng nào được tìm thấy.</div>
+        <div class="alert alert-info text-center py-4">
+            <i class="fas fa-box-open fa-2x mb-3"></i>
+            <h4>Không có đơn đặt phòng nào được tìm thấy.</h4>
+            <p>Hãy bắt đầu đặt phòng để xem lịch sử tại đây!</p>
+            <a href="@Url.Action("SearchingRoom", "Home")" class="btn btn-primary mt-3">Tìm phòng ngay</a>
+        </div>
     }
 
-    <div class="mt-4">
-        <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">⬅️ Quay lại trang chủ</a>
+    <div class="mt-4 text-center">
+        <a href="@Url.Action("Index", "Home")" class="btn btn-secondary"><i class="fas fa-home"></i> Quay lại trang chủ</a>
     </div>
 </div>
 
-
+@section scripts {
+    @* Đảm bảo đã nhúng Font Awesome cho các icon *@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script>
+        // Có thể thêm JS ở đây nếu cần cho các hiệu ứng UI
+    </script>
+}

@@ -1,0 +1,34 @@
+﻿@{
+    ViewBag.Title = "Tìm kiếm Đặt phòng";
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-primary">🔍 Tìm kiếm Đặt phòng của bạn</h2>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+
+    <div class="card shadow-sm p-4">
+        <p>Vui lòng nhập Email, Số điện thoại hoặc Mã Booking của bạn để xem chi tiết đặt phòng.</p>
+        @using (Html.BeginForm("KetQuaTimKiemBooking", "Booking", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group mb-3">
+                <label for="emailHoacSdtHoacBookingId">Email / Số điện thoại / Mã Booking:</label>
+                <input type="text" class="form-control" id="emailHoacSdtHoacBookingId" name="emailHoacSdtHoacBookingId" placeholder="VD: email@example.com, 0901234567, booking_00001" required />
+            </div>
+            <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+        }
+    </div>
+
+    <div class="mt-4">
+        <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">⬅️ Quay lại trang chủ</a>
+    </div>
+</div>

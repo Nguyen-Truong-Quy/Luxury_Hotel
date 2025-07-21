@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "Lỗi Đơn Đặt Phòng";
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+}
+
+<div class="room-detail-container">
+    <div class="alert alert-danger">
+        <h2>Lỗi</h2>
+        <p>@ViewBag.ErrorMessage</p>
+        <p>Vui lòng kiểm tra lại hoặc liên hệ quản trị viên.</p>
+        <a href="@Url.Action("SearchingRoom", "Home")" class="btn btn-primary btn-datphong">Quay lại</a>
+    </div>
+</div>
