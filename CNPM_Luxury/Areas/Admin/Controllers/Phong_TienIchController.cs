@@ -18,7 +18,7 @@ namespace CNPM_Luxury.Areas.Admin.Controllers
         // GET: Admin/Phong_TienIch
         public ActionResult Index()
         {
-            var phong_TienIch = db.Phong_TienIch.Include(p => p.TienIch).Include(p => p.Room).Include(p => p.Room1);
+            var phong_TienIch = db.Phong_TienIch.Include(p => p.TienIch).Include(p => p.Room).Include(p => p.Room);
             return View(phong_TienIch.ToList());
         }
 

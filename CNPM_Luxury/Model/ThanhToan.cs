@@ -26,6 +26,7 @@ namespace CNPM_Luxury.Model
         public Nullable<System.DateTime> ThoiGianThanhToan { get; set; }
         public string NoiDungThanhToan { get; set; }
         public Nullable<int> ID_Trang_Thai { get; set; }
+        public string AnhThanhToan { get; set; }
     
         public virtual Booking Booking { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

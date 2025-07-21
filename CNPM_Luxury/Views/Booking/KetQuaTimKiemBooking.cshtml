@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Kết quả tìm kiếm Đặt phòng";
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-primary text-center">🔍 Kết quả tìm kiếm Đặt phòng</h2>
+    <hr class="mb-4" />
+
+    @* Hiển thị thông báo từ TempData *@
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-triangle"></i> @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle"></i> @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @* Hiển thị thông báo nếu không có kết quả cụ thể *@
+    @if (TempData["Error"] != null && TempData["Error"].ToString().Contains("không tìm thấy"))
+    {
+        <div class="alert alert-info text-center py-4">
+            <i class="fas fa-search fa-2x mb-3"></i>
+            <h4>Không tìm thấy kết quả phù hợp</h4>
+            <p>Vui lòng kiểm tra lại thông tin hoặc thử với Email, Số điện thoại hoặc Mã Booking khác.</p>
+            <a href="@Url.Action("TimKiemBooking", "Booking")" class="btn btn-primary mt-3">Thử lại tìm kiếm</a>
+        </div>
+    }
+    else
+    {
+        <p class="text-muted text-center">Kết quả đã được xử lý. Vui lòng kiểm tra chi tiết nếu cần.</p>
+        <div class="text-center mt-4">
+            <a href="@Url.Action("TimKiemBooking", "Booking")" class="btn btn-secondary">⬅️ Quay lại tìm kiếm</a>
+            <a href="@Url.Action("Index", "Home")" class="btn btn-secondary ms-2">🏠 Quay lại trang chủ</a>
+        </div>
+    }
+</div>
+
+@section scripts {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+}

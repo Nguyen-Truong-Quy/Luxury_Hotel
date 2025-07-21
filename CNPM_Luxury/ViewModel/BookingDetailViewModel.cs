@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CNPM_Luxury.ViewModels
+namespace CNPM_Luxury.ViewModel
 {
     public class BookingDetailViewModel
     {
@@ -17,7 +17,7 @@ namespace CNPM_Luxury.ViewModels
         public string Ma_Phong { get; set; }
         public string Ten_Phong { get; set; }
         public string Mo_Ta { get; set; }
-        public decimal Gia_Phong { get; set; }
+        public decimal? Gia_Phong { get; set; }
         public int? So_Nguoi { get; set; }
         public string Dia_Diem { get; set; }
         public string Anh_Phong { get; set; }

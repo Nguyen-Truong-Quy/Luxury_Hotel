@@ -5,9 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using System.Data.Entity; // Đảm bảo có dòng này!
-using CNPM_Luxury.ViewModels; // Vẫn cần nếu bạn dùng BookingDetailViewModel cho XacNhan
+using CNPM_Luxury.ViewModel; // Vẫn cần nếu bạn dùng BookingDetailViewModel cho XacNhan
 using System.Collections.Generic;
 using System.Net;
+using System.Web;
+using System.IO;
+
+
 using BCrypt.Net; // THÊM DÒNG NÀY nếu bạn dùng BCrypt để băm mật khẩu
 
 
@@ -78,7 +82,7 @@ namespace CNPM_Luxury.Controllers
                 {
                     userCount++;
                     // Tăng số chữ số để tránh trùng lặp nếu số lượng user lớn hơn 999
-                    newUserId = $"User_{userCount:D" + (userCount.ToString().Length > 3 ? userCount.ToString().Length : 3) + "}";
+                    newUserId = $"User_{{userCount:D" + (userCount.ToString().Length > 3 ? userCount.ToString().Length : 3) + "}}";
                 }
 
                 string defaultPassword = GenerateRandomPassword(8);
@@ -149,7 +153,7 @@ namespace CNPM_Luxury.Controllers
             while (db.Bookings.Any(b => b.BookingID == newBookingId))
             {
                 bookingCount++;
-                newBookingId = $"booking_{bookingCount:D" + (bookingCount.ToString().Length > 5 ? bookingCount.ToString().Length : 5) + "}";
+                newBookingId = $"booking{{bookingCount:D" + (bookingCount.ToString().Length > 5 ? bookingCount.ToString().Length : 5) + "}}";
             }
 
             var booking = new Booking
@@ -218,7 +222,7 @@ namespace CNPM_Luxury.Controllers
                 Ma_Phong = booking.Room?.Ma_Phong,
                 Ten_Phong = booking.Room?.Ten_Phong,
                 Mo_Ta = booking.Room?.Mo_Ta,
-                Gia_Phong = booking.Room?.Gia_Phong ?? 0,
+                Gia_Phong = booking.Room?.Gia_Phong,
                 So_Nguoi = booking.Room?.So_Nguoi,
                 Dia_Diem = booking.Room?.Dia_Diem,
                 Anh_Phong = booking.Room?.Anh_Phong,
@@ -291,30 +295,131 @@ namespace CNPM_Luxury.Controllers
             if (string.IsNullOrEmpty(userId))
             {
                 TempData["Error"] = "⚠️ Không có thông tin người dùng được truyền để xem lịch sử đặt phòng.";
-                return RedirectToAction("TimKiemBooking"); // Chuyển hướng lại trang tìm kiếm nếu không có userId
+                return RedirectToAction("TimKiemBooking");
             }
 
-            // Eager loading Room và Trang_Thai để tránh lỗi DynamicProxies trên View
             var bookings = db.Bookings
-                             .Include(b => b.Room) // Tải thông tin phòng
-                             .Include(b => b.Trang_Thai) // Tải thông tin trạng thái
+                             .Include(b => b.Room)
+                             .Include(b => b.Trang_Thai)
                              .Where(b => b.ID_User == userId)
                              .OrderByDescending(b => b.Ngay_Tao_Don)
                              .ToList();
 
             System.Diagnostics.Debug.WriteLine($"Số lượng booking tìm thấy cho user '{userId}': {bookings.Count}");
 
-            ViewBag.Debug_UserId = userId; // Vẫn giữ để debug trên View
+            ViewBag.Debug_UserId = userId;
 
             if (bookings == null || !bookings.Any())
             {
                 TempData["Error"] = "📭 Không có đơn đặt phòng nào được tìm thấy cho thông tin bạn cung cấp.";
-                // Vẫn trả về view DanhSachBooking nhưng với danh sách rỗng, để thông báo hiển thị
-                return View("DanhSachBooking", new List<Booking>());
+                return View("DanhSachBooking", new BookingListViewModel { Bookings = new List<Booking>() });
             }
 
-            // Trả về view DanhSachBooking với danh sách các đối tượng Booking
-            return View("DanhSachBooking", bookings);
+            return View("DanhSachBooking", new BookingListViewModel { Bookings = bookings });
         }
+
+
+
+
+        [HttpGet]
+        public ActionResult ThanhToanForm(string BookingID)
+        {
+            if (string.IsNullOrEmpty(BookingID))
+            {
+                TempData["Error"] = "Thiếu mã booking.";
+                return RedirectToAction("TimKiemBooking");
+            }
+
+            var booking = db.Bookings.FirstOrDefault(b => b.BookingID == BookingID);
+
+            if (booking == null)
+            {
+                return HttpNotFound("Không tìm thấy booking.");
+            }
+
+            var room = db.Rooms.FirstOrDefault(r => r.Ma_Phong == booking.Ma_Phong);
+
+            if (room == null)
+            {
+                return HttpNotFound("Không tìm thấy phòng.");
+            }
+
+            var viewModel = new ThanhToanViewModel
+            {
+                BookingID = booking.BookingID,
+                SoTien = room.Gia_Phong,
+                NoiDungThanhToan = $"Thanh toán cho phòng {room.Ten_Phong}",
+                ID_User = booking.ID_User
+            };
+            return View(viewModel); // ✅ Thêm dòng này
+
+
+        }
+
+
+        [HttpPost]
+        public ActionResult ThanhToan(ThanhToanViewModel model)
+        {
+            if (string.IsNullOrEmpty(model.BookingID) || model.ImageUpload == null || model.ImageUpload.ContentLength == 0)
+            {
+                TempData["Error"] = "Vui lòng chọn ảnh thanh toán và kiểm tra mã booking.";
+                return RedirectToAction("ThanhToan", new { BookingID = model.BookingID });
+            }
+
+            if (!model.SoTien.HasValue || model.SoTien <= 0)
+            {
+                TempData["Error"] = "Vui lòng nhập số tiền hợp lệ.";
+                return RedirectToAction("ThanhToan", new { BookingID = model.BookingID });
+            }
+
+            var booking = db.Bookings.FirstOrDefault(b => b.BookingID == model.BookingID);
+            if (booking == null)
+            {
+                TempData["Error"] = "Không tìm thấy đơn đặt phòng.";
+                return RedirectToAction("TimKiemBooking");
+            }
+
+            try
+            {
+                string folderPath = Server.MapPath("~/Image/ThanhToan");
+                if (!Directory.Exists(folderPath))
+                    Directory.CreateDirectory(folderPath);
+
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.ImageUpload.FileName);
+                string fullPath = Path.Combine(folderPath, fileName);
+                model.ImageUpload.SaveAs(fullPath);
+
+                var thanhToan = new ThanhToan
+                {
+
+                    BookingID = model.BookingID,
+                    SoTien = model.SoTien, // Đảm bảo giá trị nullable được gán
+                    NoiDungThanhToan = model.NoiDungThanhToan,
+                    ThoiGianThanhToan = DateTime.Now, // Được gán mặc định, nhưng vẫn có thể null trong model
+                    ID_Trang_Thai = 1, // Giả sử 1 là trạng thái "Chờ xác nhận"
+                    AnhThanhToan = "~/Image/ThanhToan/" + fileName
+                };
+
+
+                db.ThanhToans.Add(thanhToan);
+
+                // ✅ Cập nhật trạng thái booking sang "Chờ xác nhận" (ID = 6)
+                booking.ID_Trang_Thai = 6;
+
+                db.SaveChanges();
+
+                db.SaveChanges();
+
+                TempData["Success"] = "Thanh toán đã được gửi thành công. Chờ xác nhận!";
+                return RedirectToAction("ThanhToan", new { BookingID = model.BookingID });
+            }
+            catch (Exception ex)
+            {
+
+                TempData["Error"] = "Đã xảy ra lỗi khi xử lý thanh toán. Vui lòng thử lại.";
+                return RedirectToAction("ThanhToan", new { BookingID = model.BookingID });
+            }
+        }
+
     }
 }

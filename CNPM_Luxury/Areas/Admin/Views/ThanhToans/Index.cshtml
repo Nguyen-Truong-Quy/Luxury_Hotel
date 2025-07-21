@@ -1,0 +1,64 @@
+﻿@model IEnumerable<CNPM_Luxury.Model.ThanhToan>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SoTien)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ThoiGianThanhToan)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NoiDungThanhToan)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AnhThanhToan)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Booking.ID_User)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Trang_Thai.Ten_Trang_Thai)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.SoTien)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ThoiGianThanhToan)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NoiDungThanhToan)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AnhThanhToan)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Booking.ID_User)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Trang_Thai.Ten_Trang_Thai)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID_ThanhToan }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID_ThanhToan }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID_ThanhToan })
+        </td>
+    </tr>
+}
+
+</table>

@@ -22,8 +22,8 @@
           <Property Name="BookingID" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="ID_User" Type="varchar" MaxLength="10" />
           <Property Name="Ma_Phong" Type="varchar" MaxLength="10" />
-          <Property Name="CheckInDate" Type="date" />
-          <Property Name="CheckOutDate" Type="date" />
+          <Property Name="CheckInDate" Type="datetime" />
+          <Property Name="CheckOutDate" Type="datetime" />
           <Property Name="Ngay_Tao_Don" Type="datetime" />
           <Property Name="ID_Trang_Thai" Type="int" />
         </EntityType>
@@ -89,16 +89,6 @@
           <Property Name="Anh_Phong" Type="text" />
           <Property Name="ID_Trang_Thai" Type="int" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
         <EntityType Name="ThanhToan">
           <Key>
             <PropertyRef Name="ID_ThanhToan" />
@@ -109,6 +99,7 @@
           <Property Name="ThoiGianThanhToan" Type="datetime" />
           <Property Name="NoiDungThanhToan" Type="nvarchar" MaxLength="100" />
           <Property Name="ID_Trang_Thai" Type="int" />
+          <Property Name="AnhThanhToan" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="TienIch">
           <Key>
@@ -146,7 +137,7 @@
           <Property Name="ThoiGianYeuCau" Type="datetime" />
           <Property Name="ID_Trang_Thai" Type="int" />
         </EntityType>
-        <Association Name="FK__BaoCaoTin__ID_Tr__6C190EBB">
+        <Association Name="FK__BaoCaoTin__ID_Tr__6D0D32F4">
           <End Role="Trang_Thai" Type="Self.Trang_Thai" Multiplicity="0..1" />
           <End Role="BaoCaoTinhTrang" Type="Self.BaoCaoTinhTrang" Multiplicity="*" />
           <ReferentialConstraint>
@@ -158,7 +149,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__BaoCaoTin__Ma_Ph__6B24EA82">
+        <Association Name="FK__BaoCaoTin__Ma_Ph__6C190EBB">
           <End Role="Room" Type="Self.Room" Multiplicity="0..1" />
           <End Role="BaoCaoTinhTrang" Type="Self.BaoCaoTinhTrang" Multiplicity="*" />
           <ReferentialConstraint>
@@ -170,7 +161,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Bookings__ID_Tra__4E88ABD4">
+        <Association Name="FK__Bookings__ID_Tra__4F7CD00D">
           <End Role="Trang_Thai" Type="Self.Trang_Thai" Multiplicity="0..1" />
           <End Role="Bookings" Type="Self.Bookings" Multiplicity="*" />
           <ReferentialConstraint>
@@ -182,7 +173,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Bookings__ID_Use__4CA06362">
+        <Association Name="FK__Bookings__ID_Use__4D94879B">
           <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
           <End Role="Bookings" Type="Self.Bookings" Multiplicity="*" />
           <ReferentialConstraint>
@@ -194,7 +185,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Bookings__Ma_Pho__4D94879B">
+        <Association Name="FK__Bookings__Ma_Pho__4E88ABD4">
           <End Role="Room" Type="Self.Room" Multiplicity="0..1" />
           <End Role="Bookings" Type="Self.Bookings" Multiplicity="*" />
           <ReferentialConstraint>
@@ -206,7 +197,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ChiTietHo__ID_Di__628FA481">
+        <Association Name="FK__ChiTietHo__ID_Di__6383C8BA">
           <End Role="DichVuPhuThu" Type="Self.DichVuPhuThu" Multiplicity="0..1" />
           <End Role="ChiTietHoaDon" Type="Self.ChiTietHoaDon" Multiplicity="*" />
           <ReferentialConstraint>
@@ -218,7 +209,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ChiTietHo__ID_Th__619B8048">
+        <Association Name="FK__ChiTietHo__ID_Th__628FA481">
           <End Role="ThanhToan" Type="Self.ThanhToan" Multiplicity="0..1" />
           <End Role="ChiTietHoaDon" Type="Self.ChiTietHoaDon" Multiplicity="*" />
           <ReferentialConstraint>
@@ -230,7 +221,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DanhGia__Booking__6754599E">
+        <Association Name="FK__DanhGia__Booking__68487DD7">
           <End Role="Bookings" Type="Self.Bookings" Multiplicity="0..1" />
           <End Role="DanhGia" Type="Self.DanhGia" Multiplicity="*" />
           <ReferentialConstraint>
@@ -242,7 +233,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DichVuPhu__ID_Tr__52593CB8">
+        <Association Name="FK__DichVuPhu__ID_Tr__534D60F1">
           <End Role="Trang_Thai" Type="Self.Trang_Thai" Multiplicity="0..1" />
           <End Role="DichVuPhuThu" Type="Self.DichVuPhuThu" Multiplicity="*" />
           <ReferentialConstraint>
@@ -290,7 +281,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ThanhToan__Booki__5BE2A6F2">
+        <Association Name="FK__ThanhToan__Booki__5CD6CB2B">
           <End Role="Bookings" Type="Self.Bookings" Multiplicity="0..1" />
           <End Role="ThanhToan" Type="Self.ThanhToan" Multiplicity="*" />
           <ReferentialConstraint>
@@ -302,7 +293,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ThanhToan__ID_Tr__5CD6CB2B">
+        <Association Name="FK__ThanhToan__ID_Tr__5DCAEF64">
           <End Role="Trang_Thai" Type="Self.Trang_Thai" Multiplicity="0..1" />
           <End Role="ThanhToan" Type="Self.ThanhToan" Multiplicity="*" />
           <ReferentialConstraint>
@@ -326,7 +317,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__YeuCauDic__Booki__5629CD9C">
+        <Association Name="FK__YeuCauDic__Booki__571DF1D5">
           <End Role="Bookings" Type="Self.Bookings" Multiplicity="0..1" />
           <End Role="YeuCauDichVu" Type="Self.YeuCauDichVu" Multiplicity="*" />
           <ReferentialConstraint>
@@ -338,7 +329,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__YeuCauDic__ID_Di__571DF1D5">
+        <Association Name="FK__YeuCauDic__ID_Di__5812160E">
           <End Role="DichVuPhuThu" Type="Self.DichVuPhuThu" Multiplicity="0..1" />
           <End Role="YeuCauDichVu" Type="Self.YeuCauDichVu" Multiplicity="*" />
           <ReferentialConstraint>
@@ -350,7 +341,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__YeuCauDic__ID_Tr__5812160E">
+        <Association Name="FK__YeuCauDic__ID_Tr__59063A47">
           <End Role="Trang_Thai" Type="Self.Trang_Thai" Multiplicity="0..1" />
           <End Role="YeuCauDichVu" Type="Self.YeuCauDichVu" Multiplicity="*" />
           <ReferentialConstraint>
@@ -359,18 +350,6 @@
             </Principal>
             <Dependent Role="YeuCauDichVu">
               <PropertyRef Name="ID_Trang_Thai" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Phong_TienIch_MaPhong">
-          <End Role="Room" Type="Self.Room" Multiplicity="1" />
-          <End Role="Phong_TienIch" Type="Self.Phong_TienIch" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Room">
-              <PropertyRef Name="Ma_Phong" />
-            </Principal>
-            <Dependent Role="Phong_TienIch">
-              <PropertyRef Name="Ma_Phong" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -383,45 +362,44 @@
           <EntitySet Name="Phong_TienIch" EntityType="Self.Phong_TienIch" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ThanhToan" EntityType="Self.ThanhToan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TienIch" EntityType="Self.TienIch" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Trang_Thai" EntityType="Self.Trang_Thai" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="YeuCauDichVu" EntityType="Self.YeuCauDichVu" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__BaoCaoTin__ID_Tr__6C190EBB" Association="Self.FK__BaoCaoTin__ID_Tr__6C190EBB">
+          <AssociationSet Name="FK__BaoCaoTin__ID_Tr__6D0D32F4" Association="Self.FK__BaoCaoTin__ID_Tr__6D0D32F4">
             <End Role="Trang_Thai" EntitySet="Trang_Thai" />
             <End Role="BaoCaoTinhTrang" EntitySet="BaoCaoTinhTrang" />
           </AssociationSet>
-          <AssociationSet Name="FK__BaoCaoTin__Ma_Ph__6B24EA82" Association="Self.FK__BaoCaoTin__Ma_Ph__6B24EA82">
+          <AssociationSet Name="FK__BaoCaoTin__Ma_Ph__6C190EBB" Association="Self.FK__BaoCaoTin__Ma_Ph__6C190EBB">
             <End Role="Room" EntitySet="Room" />
             <End Role="BaoCaoTinhTrang" EntitySet="BaoCaoTinhTrang" />
           </AssociationSet>
-          <AssociationSet Name="FK__Bookings__ID_Tra__4E88ABD4" Association="Self.FK__Bookings__ID_Tra__4E88ABD4">
+          <AssociationSet Name="FK__Bookings__ID_Tra__4F7CD00D" Association="Self.FK__Bookings__ID_Tra__4F7CD00D">
             <End Role="Trang_Thai" EntitySet="Trang_Thai" />
             <End Role="Bookings" EntitySet="Bookings" />
           </AssociationSet>
-          <AssociationSet Name="FK__Bookings__ID_Use__4CA06362" Association="Self.FK__Bookings__ID_Use__4CA06362">
+          <AssociationSet Name="FK__Bookings__ID_Use__4D94879B" Association="Self.FK__Bookings__ID_Use__4D94879B">
             <End Role="Users" EntitySet="Users" />
             <End Role="Bookings" EntitySet="Bookings" />
           </AssociationSet>
-          <AssociationSet Name="FK__Bookings__Ma_Pho__4D94879B" Association="Self.FK__Bookings__Ma_Pho__4D94879B">
+          <AssociationSet Name="FK__Bookings__Ma_Pho__4E88ABD4" Association="Self.FK__Bookings__Ma_Pho__4E88ABD4">
             <End Role="Room" EntitySet="Room" />
             <End Role="Bookings" EntitySet="Bookings" />
           </AssociationSet>
-          <AssociationSet Name="FK__ChiTietHo__ID_Di__628FA481" Association="Self.FK__ChiTietHo__ID_Di__628FA481">
+          <AssociationSet Name="FK__ChiTietHo__ID_Di__6383C8BA" Association="Self.FK__ChiTietHo__ID_Di__6383C8BA">
             <End Role="DichVuPhuThu" EntitySet="DichVuPhuThu" />
             <End Role="ChiTietHoaDon" EntitySet="ChiTietHoaDon" />
           </AssociationSet>
-          <AssociationSet Name="FK__ChiTietHo__ID_Th__619B8048" Association="Self.FK__ChiTietHo__ID_Th__619B8048">
+          <AssociationSet Name="FK__ChiTietHo__ID_Th__628FA481" Association="Self.FK__ChiTietHo__ID_Th__628FA481">
             <End Role="ThanhToan" EntitySet="ThanhToan" />
             <End Role="ChiTietHoaDon" EntitySet="ChiTietHoaDon" />
           </AssociationSet>
-          <AssociationSet Name="FK__DanhGia__Booking__6754599E" Association="Self.FK__DanhGia__Booking__6754599E">
+          <AssociationSet Name="FK__DanhGia__Booking__68487DD7" Association="Self.FK__DanhGia__Booking__68487DD7">
             <End Role="Bookings" EntitySet="Bookings" />
             <End Role="DanhGia" EntitySet="DanhGia" />
           </AssociationSet>
-          <AssociationSet Name="FK__DichVuPhu__ID_Tr__52593CB8" Association="Self.FK__DichVuPhu__ID_Tr__52593CB8">
+          <AssociationSet Name="FK__DichVuPhu__ID_Tr__534D60F1" Association="Self.FK__DichVuPhu__ID_Tr__534D60F1">
             <End Role="Trang_Thai" EntitySet="Trang_Thai" />
             <End Role="DichVuPhuThu" EntitySet="DichVuPhuThu" />
           </AssociationSet>
@@ -437,11 +415,11 @@
             <End Role="Trang_Thai" EntitySet="Trang_Thai" />
             <End Role="Room" EntitySet="Room" />
           </AssociationSet>
-          <AssociationSet Name="FK__ThanhToan__Booki__5BE2A6F2" Association="Self.FK__ThanhToan__Booki__5BE2A6F2">
+          <AssociationSet Name="FK__ThanhToan__Booki__5CD6CB2B" Association="Self.FK__ThanhToan__Booki__5CD6CB2B">
             <End Role="Bookings" EntitySet="Bookings" />
             <End Role="ThanhToan" EntitySet="ThanhToan" />
           </AssociationSet>
-          <AssociationSet Name="FK__ThanhToan__ID_Tr__5CD6CB2B" Association="Self.FK__ThanhToan__ID_Tr__5CD6CB2B">
+          <AssociationSet Name="FK__ThanhToan__ID_Tr__5DCAEF64" Association="Self.FK__ThanhToan__ID_Tr__5DCAEF64">
             <End Role="Trang_Thai" EntitySet="Trang_Thai" />
             <End Role="ThanhToan" EntitySet="ThanhToan" />
           </AssociationSet>
@@ -449,21 +427,17 @@
             <End Role="Role" EntitySet="Role" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK__YeuCauDic__Booki__5629CD9C" Association="Self.FK__YeuCauDic__Booki__5629CD9C">
+          <AssociationSet Name="FK__YeuCauDic__Booki__571DF1D5" Association="Self.FK__YeuCauDic__Booki__571DF1D5">
             <End Role="Bookings" EntitySet="Bookings" />
             <End Role="YeuCauDichVu" EntitySet="YeuCauDichVu" />
           </AssociationSet>
-          <AssociationSet Name="FK__YeuCauDic__ID_Di__571DF1D5" Association="Self.FK__YeuCauDic__ID_Di__571DF1D5">
+          <AssociationSet Name="FK__YeuCauDic__ID_Di__5812160E" Association="Self.FK__YeuCauDic__ID_Di__5812160E">
             <End Role="DichVuPhuThu" EntitySet="DichVuPhuThu" />
             <End Role="YeuCauDichVu" EntitySet="YeuCauDichVu" />
           </AssociationSet>
-          <AssociationSet Name="FK__YeuCauDic__ID_Tr__5812160E" Association="Self.FK__YeuCauDic__ID_Tr__5812160E">
+          <AssociationSet Name="FK__YeuCauDic__ID_Tr__59063A47" Association="Self.FK__YeuCauDic__ID_Tr__59063A47">
             <End Role="Trang_Thai" EntitySet="Trang_Thai" />
             <End Role="YeuCauDichVu" EntitySet="YeuCauDichVu" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Phong_TienIch_MaPhong" Association="Self.FK_Phong_TienIch_MaPhong">
-            <End Role="Room" EntitySet="Room" />
-            <End Role="Phong_TienIch" EntitySet="Phong_TienIch" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -480,8 +454,8 @@
           <Property Name="ID_Trang_Thai" Type="Int32" />
           <Property Name="NgayGhiNhan" Type="DateTime" Precision="3" />
           <Property Name="GhiChu" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Trang_Thai" Relationship="Self.FK__BaoCaoTin__ID_Tr__6C190EBB" FromRole="BaoCaoTinhTrang" ToRole="Trang_Thai" />
-          <NavigationProperty Name="Room" Relationship="Self.FK__BaoCaoTin__Ma_Ph__6B24EA82" FromRole="BaoCaoTinhTrang" ToRole="Room" />
+          <NavigationProperty Name="Trang_Thai" Relationship="Self.FK__BaoCaoTin__ID_Tr__6D0D32F4" FromRole="BaoCaoTinhTrang" ToRole="Trang_Thai" />
+          <NavigationProperty Name="Room" Relationship="Self.FK__BaoCaoTin__Ma_Ph__6C190EBB" FromRole="BaoCaoTinhTrang" ToRole="Room" />
         </EntityType>
         <EntityType Name="Booking">
           <Key>
@@ -490,16 +464,16 @@
           <Property Name="BookingID" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ID_User" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Ma_Phong" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="CheckInDate" Type="DateTime" Precision="0" />
-          <Property Name="CheckOutDate" Type="DateTime" Precision="0" />
+          <Property Name="CheckInDate" Type="DateTime" Precision="3" />
+          <Property Name="CheckOutDate" Type="DateTime" Precision="3" />
           <Property Name="Ngay_Tao_Don" Type="DateTime" Precision="3" />
           <Property Name="ID_Trang_Thai" Type="Int32" />
-          <NavigationProperty Name="Trang_Thai" Relationship="Self.FK__Bookings__ID_Tra__4E88ABD4" FromRole="Bookings" ToRole="Trang_Thai" />
-          <NavigationProperty Name="User" Relationship="Self.FK__Bookings__ID_Use__4CA06362" FromRole="Bookings" ToRole="Users" />
-          <NavigationProperty Name="Room" Relationship="Self.FK__Bookings__Ma_Pho__4D94879B" FromRole="Bookings" ToRole="Room" />
-          <NavigationProperty Name="DanhGias" Relationship="Self.FK__DanhGia__Booking__6754599E" FromRole="Bookings" ToRole="DanhGia" />
-          <NavigationProperty Name="ThanhToans" Relationship="Self.FK__ThanhToan__Booki__5BE2A6F2" FromRole="Bookings" ToRole="ThanhToan" />
-          <NavigationProperty Name="YeuCauDichVus" Relationship="Self.FK__YeuCauDic__Booki__5629CD9C" FromRole="Bookings" ToRole="YeuCauDichVu" />
+          <NavigationProperty Name="Trang_Thai" Relationship="Self.FK__Bookings__ID_Tra__4F7CD00D" FromRole="Bookings" ToRole="Trang_Thai" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Bookings__ID_Use__4D94879B" FromRole="Bookings" ToRole="Users" />
+          <NavigationProperty Name="Room" Relationship="Self.FK__Bookings__Ma_Pho__4E88ABD4" FromRole="Bookings" ToRole="Room" />
+          <NavigationProperty Name="DanhGias" Relationship="Self.FK__DanhGia__Booking__68487DD7" FromRole="Bookings" ToRole="DanhGia" />
+          <NavigationProperty Name="ThanhToans" Relationship="Self.FK__ThanhToan__Booki__5CD6CB2B" FromRole="Bookings" ToRole="ThanhToan" />
+          <NavigationProperty Name="YeuCauDichVus" Relationship="Self.FK__YeuCauDic__Booki__571DF1D5" FromRole="Bookings" ToRole="YeuCauDichVu" />
         </EntityType>
         <EntityType Name="ChiTietHoaDon">
           <Key>
@@ -511,8 +485,8 @@
           <Property Name="ID_DichVu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="SoLuong" Type="Int32" />
           <Property Name="DonGia" Type="Decimal" Precision="10" Scale="2" />
-          <NavigationProperty Name="DichVuPhuThu" Relationship="Self.FK__ChiTietHo__ID_Di__628FA481" FromRole="ChiTietHoaDon" ToRole="DichVuPhuThu" />
-          <NavigationProperty Name="ThanhToan" Relationship="Self.FK__ChiTietHo__ID_Th__619B8048" FromRole="ChiTietHoaDon" ToRole="ThanhToan" />
+          <NavigationProperty Name="DichVuPhuThu" Relationship="Self.FK__ChiTietHo__ID_Di__6383C8BA" FromRole="ChiTietHoaDon" ToRole="DichVuPhuThu" />
+          <NavigationProperty Name="ThanhToan" Relationship="Self.FK__ChiTietHo__ID_Th__628FA481" FromRole="ChiTietHoaDon" ToRole="ThanhToan" />
         </EntityType>
         <EntityType Name="DanhGia">
           <Key>
@@ -524,7 +498,7 @@
           <Property Name="NoiDungDanhGia" Type="String" MaxLength="3000" FixedLength="false" Unicode="true" />
           <Property Name="NgayDanhGia" Type="DateTime" Precision="0" />
           <Property Name="AnhMinhHoa" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Booking" Relationship="Self.FK__DanhGia__Booking__6754599E" FromRole="DanhGia" ToRole="Bookings" />
+          <NavigationProperty Name="Booking" Relationship="Self.FK__DanhGia__Booking__68487DD7" FromRole="DanhGia" ToRole="Bookings" />
         </EntityType>
         <EntityType Name="DichVuPhuThu">
           <Key>
@@ -536,9 +510,9 @@
           <Property Name="ThoiGianMo" Type="Time" Precision="7" />
           <Property Name="ThoiGianKetThuc" Type="Time" Precision="7" />
           <Property Name="ID_Trang_Thai" Type="Int32" />
-          <NavigationProperty Name="ChiTietHoaDons" Relationship="Self.FK__ChiTietHo__ID_Di__628FA481" FromRole="DichVuPhuThu" ToRole="ChiTietHoaDon" />
-          <NavigationProperty Name="Trang_Thai" Relationship="Self.FK__DichVuPhu__ID_Tr__52593CB8" FromRole="DichVuPhuThu" ToRole="Trang_Thai" />
-          <NavigationProperty Name="YeuCauDichVus" Relationship="Self.FK__YeuCauDic__ID_Di__571DF1D5" FromRole="DichVuPhuThu" ToRole="YeuCauDichVu" />
+          <NavigationProperty Name="ChiTietHoaDons" Relationship="Self.FK__ChiTietHo__ID_Di__6383C8BA" FromRole="DichVuPhuThu" ToRole="ChiTietHoaDon" />
+          <NavigationProperty Name="Trang_Thai" Relationship="Self.FK__DichVuPhu__ID_Tr__534D60F1" FromRole="DichVuPhuThu" ToRole="Trang_Thai" />
+          <NavigationProperty Name="YeuCauDichVus" Relationship="Self.FK__YeuCauDic__ID_Di__5812160E" FromRole="DichVuPhuThu" ToRole="YeuCauDichVu" />
         </EntityType>
         <EntityType Name="Phong_TienIch">
           <Key>
@@ -550,7 +524,6 @@
           <Property Name="Ngay_Them_Tien_Ich_Phong" Type="DateTime" Precision="3" />
           <NavigationProperty Name="TienIch" Relationship="Self.FK__Phong_Tie__ID_Ti__48CFD27E" FromRole="Phong_TienIch" ToRole="TienIch" />
           <NavigationProperty Name="Room" Relationship="Self.FK__Phong_Tie__Ma_Ph__47DBAE45" FromRole="Phong_TienIch" ToRole="Room" />
-          <NavigationProperty Name="Room1" Relationship="Self.FK_Phong_TienIch_MaPhong" FromRole="Phong_TienIch" ToRole="Room" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -572,21 +545,10 @@
           <Property Name="So_Nguoi" Type="Int32" />
           <Property Name="Anh_Phong" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="ID_Trang_Thai" Type="Int32" />
-          <NavigationProperty Name="BaoCaoTinhTrangs" Relationship="Self.FK__BaoCaoTin__Ma_Ph__6B24EA82" FromRole="Room" ToRole="BaoCaoTinhTrang" />
-          <NavigationProperty Name="Bookings" Relationship="Self.FK__Bookings__Ma_Pho__4D94879B" FromRole="Room" ToRole="Bookings" />
+          <NavigationProperty Name="BaoCaoTinhTrangs" Relationship="Self.FK__BaoCaoTin__Ma_Ph__6C190EBB" FromRole="Room" ToRole="BaoCaoTinhTrang" />
+          <NavigationProperty Name="Bookings" Relationship="Self.FK__Bookings__Ma_Pho__4E88ABD4" FromRole="Room" ToRole="Bookings" />
           <NavigationProperty Name="Phong_TienIch" Relationship="Self.FK__Phong_Tie__Ma_Ph__47DBAE45" FromRole="Room" ToRole="Phong_TienIch" />
-          <NavigationProperty Name="Phong_TienIch1" Relationship="Self.FK_Phong_TienIch_MaPhong" FromRole="Room" ToRole="Phong_TienIch" />
           <NavigationProperty Name="Trang_Thai" Relationship="Self.FK__Room__ID_Trang_T__4222D4EF" FromRole="Room" ToRole="Trang_Thai" />
-        </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="ThanhToan">
           <Key>
@@ -598,9 +560,10 @@
           <Property Name="ThoiGianThanhToan" Type="DateTime" Precision="3" />
           <Property Name="NoiDungThanhToan" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="ID_Trang_Thai" Type="Int32" />
-          <NavigationProperty Name="Booking" Relationship="Self.FK__ThanhToan__Booki__5BE2A6F2" FromRole="ThanhToan" ToRole="Bookings" />
-          <NavigationProperty Name="ChiTietHoaDons" Relationship="Self.FK__ChiTietHo__ID_Th__619B8048" FromRole="ThanhToan" ToRole="ChiTietHoaDon" />
-          <NavigationProperty Name="Trang_Thai" Relationship="Self.FK__ThanhToan__ID_Tr__5CD6CB2B" FromRole="ThanhToan" ToRole="Trang_Thai" />
+          <Property Name="AnhThanhToan" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Booking" Relationship="Self.FK__ThanhToan__Booki__5CD6CB2B" FromRole="ThanhToan" ToRole="Bookings" />
+          <NavigationProperty Name="ChiTietHoaDons" Relationship="Self.FK__ChiTietHo__ID_Th__628FA481" FromRole="ThanhToan" ToRole="ChiTietHoaDon" />
+          <NavigationProperty Name="Trang_Thai" Relationship="Self.FK__ThanhToan__ID_Tr__5DCAEF64" FromRole="ThanhToan" ToRole="Trang_Thai" />
         </EntityType>
         <EntityType Name="TienIch">
           <Key>
@@ -617,12 +580,12 @@
           <Property Name="ID_Trang_Thai" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Ten_Trang_Thai" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="LoaiTrangThai" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="BaoCaoTinhTrangs" Relationship="Self.FK__BaoCaoTin__ID_Tr__6C190EBB" FromRole="Trang_Thai" ToRole="BaoCaoTinhTrang" />
-          <NavigationProperty Name="Bookings" Relationship="Self.FK__Bookings__ID_Tra__4E88ABD4" FromRole="Trang_Thai" ToRole="Bookings" />
-          <NavigationProperty Name="DichVuPhuThus" Relationship="Self.FK__DichVuPhu__ID_Tr__52593CB8" FromRole="Trang_Thai" ToRole="DichVuPhuThu" />
+          <NavigationProperty Name="BaoCaoTinhTrangs" Relationship="Self.FK__BaoCaoTin__ID_Tr__6D0D32F4" FromRole="Trang_Thai" ToRole="BaoCaoTinhTrang" />
+          <NavigationProperty Name="Bookings" Relationship="Self.FK__Bookings__ID_Tra__4F7CD00D" FromRole="Trang_Thai" ToRole="Bookings" />
+          <NavigationProperty Name="DichVuPhuThus" Relationship="Self.FK__DichVuPhu__ID_Tr__534D60F1" FromRole="Trang_Thai" ToRole="DichVuPhuThu" />
           <NavigationProperty Name="Rooms" Relationship="Self.FK__Room__ID_Trang_T__4222D4EF" FromRole="Trang_Thai" ToRole="Room" />
-          <NavigationProperty Name="ThanhToans" Relationship="Self.FK__ThanhToan__ID_Tr__5CD6CB2B" FromRole="Trang_Thai" ToRole="ThanhToan" />
-          <NavigationProperty Name="YeuCauDichVus" Relationship="Self.FK__YeuCauDic__ID_Tr__5812160E" FromRole="Trang_Thai" ToRole="YeuCauDichVu" />
+          <NavigationProperty Name="ThanhToans" Relationship="Self.FK__ThanhToan__ID_Tr__5DCAEF64" FromRole="Trang_Thai" ToRole="ThanhToan" />
+          <NavigationProperty Name="YeuCauDichVus" Relationship="Self.FK__YeuCauDic__ID_Tr__59063A47" FromRole="Trang_Thai" ToRole="YeuCauDichVu" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -634,7 +597,7 @@
           <Property Name="HO_TEN_KH" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SDT_KH" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ID_Role" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Bookings" Relationship="Self.FK__Bookings__ID_Use__4CA06362" FromRole="Users" ToRole="Bookings" />
+          <NavigationProperty Name="Bookings" Relationship="Self.FK__Bookings__ID_Use__4D94879B" FromRole="Users" ToRole="Bookings" />
           <NavigationProperty Name="Role" Relationship="Self.FK__Users__ID_Role__3A81B327" FromRole="Users" ToRole="Role" />
         </EntityType>
         <EntityType Name="YeuCauDichVu">
@@ -646,11 +609,11 @@
           <Property Name="ID_DichVu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="ThoiGianYeuCau" Type="DateTime" Precision="3" />
           <Property Name="ID_Trang_Thai" Type="Int32" />
-          <NavigationProperty Name="Booking" Relationship="Self.FK__YeuCauDic__Booki__5629CD9C" FromRole="YeuCauDichVu" ToRole="Bookings" />
-          <NavigationProperty Name="DichVuPhuThu" Relationship="Self.FK__YeuCauDic__ID_Di__571DF1D5" FromRole="YeuCauDichVu" ToRole="DichVuPhuThu" />
-          <NavigationProperty Name="Trang_Thai" Relationship="Self.FK__YeuCauDic__ID_Tr__5812160E" FromRole="YeuCauDichVu" ToRole="Trang_Thai" />
+          <NavigationProperty Name="Booking" Relationship="Self.FK__YeuCauDic__Booki__571DF1D5" FromRole="YeuCauDichVu" ToRole="Bookings" />
+          <NavigationProperty Name="DichVuPhuThu" Relationship="Self.FK__YeuCauDic__ID_Di__5812160E" FromRole="YeuCauDichVu" ToRole="DichVuPhuThu" />
+          <NavigationProperty Name="Trang_Thai" Relationship="Self.FK__YeuCauDic__ID_Tr__59063A47" FromRole="YeuCauDichVu" ToRole="Trang_Thai" />
         </EntityType>
-        <Association Name="FK__BaoCaoTin__ID_Tr__6C190EBB">
+        <Association Name="FK__BaoCaoTin__ID_Tr__6D0D32F4">
           <End Role="Trang_Thai" Type="Self.Trang_Thai" Multiplicity="0..1" />
           <End Role="BaoCaoTinhTrang" Type="Self.BaoCaoTinhTrang" Multiplicity="*" />
           <ReferentialConstraint>
@@ -662,7 +625,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__BaoCaoTin__Ma_Ph__6B24EA82">
+        <Association Name="FK__BaoCaoTin__Ma_Ph__6C190EBB">
           <End Role="Room" Type="Self.Room" Multiplicity="0..1" />
           <End Role="BaoCaoTinhTrang" Type="Self.BaoCaoTinhTrang" Multiplicity="*" />
           <ReferentialConstraint>
@@ -674,7 +637,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Bookings__ID_Tra__4E88ABD4">
+        <Association Name="FK__Bookings__ID_Tra__4F7CD00D">
           <End Role="Trang_Thai" Type="Self.Trang_Thai" Multiplicity="0..1" />
           <End Role="Bookings" Type="Self.Booking" Multiplicity="*" />
           <ReferentialConstraint>
@@ -686,7 +649,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Bookings__ID_Use__4CA06362">
+        <Association Name="FK__Bookings__ID_Use__4D94879B">
           <End Role="Users" Type="Self.User" Multiplicity="0..1" />
           <End Role="Bookings" Type="Self.Booking" Multiplicity="*" />
           <ReferentialConstraint>
@@ -698,7 +661,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Bookings__Ma_Pho__4D94879B">
+        <Association Name="FK__Bookings__Ma_Pho__4E88ABD4">
           <End Role="Room" Type="Self.Room" Multiplicity="0..1" />
           <End Role="Bookings" Type="Self.Booking" Multiplicity="*" />
           <ReferentialConstraint>
@@ -710,7 +673,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DanhGia__Booking__6754599E">
+        <Association Name="FK__DanhGia__Booking__68487DD7">
           <End Role="Bookings" Type="Self.Booking" Multiplicity="0..1" />
           <End Role="DanhGia" Type="Self.DanhGia" Multiplicity="*" />
           <ReferentialConstraint>
@@ -722,7 +685,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ThanhToan__Booki__5BE2A6F2">
+        <Association Name="FK__ThanhToan__Booki__5CD6CB2B">
           <End Role="Bookings" Type="Self.Booking" Multiplicity="0..1" />
           <End Role="ThanhToan" Type="Self.ThanhToan" Multiplicity="*" />
           <ReferentialConstraint>
@@ -734,7 +697,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__YeuCauDic__Booki__5629CD9C">
+        <Association Name="FK__YeuCauDic__Booki__571DF1D5">
           <End Role="Bookings" Type="Self.Booking" Multiplicity="0..1" />
           <End Role="YeuCauDichVu" Type="Self.YeuCauDichVu" Multiplicity="*" />
           <ReferentialConstraint>
@@ -746,7 +709,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ChiTietHo__ID_Di__628FA481">
+        <Association Name="FK__ChiTietHo__ID_Di__6383C8BA">
           <End Role="DichVuPhuThu" Type="Self.DichVuPhuThu" Multiplicity="0..1" />
           <End Role="ChiTietHoaDon" Type="Self.ChiTietHoaDon" Multiplicity="*" />
           <ReferentialConstraint>
@@ -758,7 +721,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ChiTietHo__ID_Th__619B8048">
+        <Association Name="FK__ChiTietHo__ID_Th__628FA481">
           <End Role="ThanhToan" Type="Self.ThanhToan" Multiplicity="0..1" />
           <End Role="ChiTietHoaDon" Type="Self.ChiTietHoaDon" Multiplicity="*" />
           <ReferentialConstraint>
@@ -770,7 +733,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DichVuPhu__ID_Tr__52593CB8">
+        <Association Name="FK__DichVuPhu__ID_Tr__534D60F1">
           <End Role="Trang_Thai" Type="Self.Trang_Thai" Multiplicity="0..1" />
           <End Role="DichVuPhuThu" Type="Self.DichVuPhuThu" Multiplicity="*" />
           <ReferentialConstraint>
@@ -782,7 +745,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__YeuCauDic__ID_Di__571DF1D5">
+        <Association Name="FK__YeuCauDic__ID_Di__5812160E">
           <End Role="DichVuPhuThu" Type="Self.DichVuPhuThu" Multiplicity="0..1" />
           <End Role="YeuCauDichVu" Type="Self.YeuCauDichVu" Multiplicity="*" />
           <ReferentialConstraint>
@@ -807,18 +770,6 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Phong_Tie__Ma_Ph__47DBAE45">
-          <End Role="Room" Type="Self.Room" Multiplicity="1" />
-          <End Role="Phong_TienIch" Type="Self.Phong_TienIch" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Room">
-              <PropertyRef Name="Ma_Phong" />
-            </Principal>
-            <Dependent Role="Phong_TienIch">
-              <PropertyRef Name="Ma_Phong" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Phong_TienIch_MaPhong">
           <End Role="Room" Type="Self.Room" Multiplicity="1" />
           <End Role="Phong_TienIch" Type="Self.Phong_TienIch" Multiplicity="*" />
           <ReferentialConstraint>
@@ -854,7 +805,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ThanhToan__ID_Tr__5CD6CB2B">
+        <Association Name="FK__ThanhToan__ID_Tr__5DCAEF64">
           <End Role="Trang_Thai" Type="Self.Trang_Thai" Multiplicity="0..1" />
           <End Role="ThanhToan" Type="Self.ThanhToan" Multiplicity="*" />
           <ReferentialConstraint>
@@ -866,7 +817,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__YeuCauDic__ID_Tr__5812160E">
+        <Association Name="FK__YeuCauDic__ID_Tr__59063A47">
           <End Role="Trang_Thai" Type="Self.Trang_Thai" Multiplicity="0..1" />
           <End Role="YeuCauDichVu" Type="Self.YeuCauDichVu" Multiplicity="*" />
           <ReferentialConstraint>
@@ -887,57 +838,56 @@
           <EntitySet Name="Phong_TienIch" EntityType="Self.Phong_TienIch" />
           <EntitySet Name="Roles" EntityType="Self.Role" />
           <EntitySet Name="Rooms" EntityType="Self.Room" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="ThanhToans" EntityType="Self.ThanhToan" />
           <EntitySet Name="TienIches" EntityType="Self.TienIch" />
           <EntitySet Name="Trang_Thai" EntityType="Self.Trang_Thai" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="YeuCauDichVus" EntityType="Self.YeuCauDichVu" />
-          <AssociationSet Name="FK__BaoCaoTin__ID_Tr__6C190EBB" Association="Self.FK__BaoCaoTin__ID_Tr__6C190EBB">
+          <AssociationSet Name="FK__BaoCaoTin__ID_Tr__6D0D32F4" Association="Self.FK__BaoCaoTin__ID_Tr__6D0D32F4">
             <End Role="Trang_Thai" EntitySet="Trang_Thai" />
             <End Role="BaoCaoTinhTrang" EntitySet="BaoCaoTinhTrangs" />
           </AssociationSet>
-          <AssociationSet Name="FK__BaoCaoTin__Ma_Ph__6B24EA82" Association="Self.FK__BaoCaoTin__Ma_Ph__6B24EA82">
+          <AssociationSet Name="FK__BaoCaoTin__Ma_Ph__6C190EBB" Association="Self.FK__BaoCaoTin__Ma_Ph__6C190EBB">
             <End Role="Room" EntitySet="Rooms" />
             <End Role="BaoCaoTinhTrang" EntitySet="BaoCaoTinhTrangs" />
           </AssociationSet>
-          <AssociationSet Name="FK__Bookings__ID_Tra__4E88ABD4" Association="Self.FK__Bookings__ID_Tra__4E88ABD4">
+          <AssociationSet Name="FK__Bookings__ID_Tra__4F7CD00D" Association="Self.FK__Bookings__ID_Tra__4F7CD00D">
             <End Role="Trang_Thai" EntitySet="Trang_Thai" />
             <End Role="Bookings" EntitySet="Bookings" />
           </AssociationSet>
-          <AssociationSet Name="FK__Bookings__ID_Use__4CA06362" Association="Self.FK__Bookings__ID_Use__4CA06362">
+          <AssociationSet Name="FK__Bookings__ID_Use__4D94879B" Association="Self.FK__Bookings__ID_Use__4D94879B">
             <End Role="Users" EntitySet="Users" />
             <End Role="Bookings" EntitySet="Bookings" />
           </AssociationSet>
-          <AssociationSet Name="FK__Bookings__Ma_Pho__4D94879B" Association="Self.FK__Bookings__Ma_Pho__4D94879B">
+          <AssociationSet Name="FK__Bookings__Ma_Pho__4E88ABD4" Association="Self.FK__Bookings__Ma_Pho__4E88ABD4">
             <End Role="Room" EntitySet="Rooms" />
             <End Role="Bookings" EntitySet="Bookings" />
           </AssociationSet>
-          <AssociationSet Name="FK__DanhGia__Booking__6754599E" Association="Self.FK__DanhGia__Booking__6754599E">
+          <AssociationSet Name="FK__DanhGia__Booking__68487DD7" Association="Self.FK__DanhGia__Booking__68487DD7">
             <End Role="Bookings" EntitySet="Bookings" />
             <End Role="DanhGia" EntitySet="DanhGias" />
           </AssociationSet>
-          <AssociationSet Name="FK__ThanhToan__Booki__5BE2A6F2" Association="Self.FK__ThanhToan__Booki__5BE2A6F2">
+          <AssociationSet Name="FK__ThanhToan__Booki__5CD6CB2B" Association="Self.FK__ThanhToan__Booki__5CD6CB2B">
             <End Role="Bookings" EntitySet="Bookings" />
             <End Role="ThanhToan" EntitySet="ThanhToans" />
           </AssociationSet>
-          <AssociationSet Name="FK__YeuCauDic__Booki__5629CD9C" Association="Self.FK__YeuCauDic__Booki__5629CD9C">
+          <AssociationSet Name="FK__YeuCauDic__Booki__571DF1D5" Association="Self.FK__YeuCauDic__Booki__571DF1D5">
             <End Role="Bookings" EntitySet="Bookings" />
             <End Role="YeuCauDichVu" EntitySet="YeuCauDichVus" />
           </AssociationSet>
-          <AssociationSet Name="FK__ChiTietHo__ID_Di__628FA481" Association="Self.FK__ChiTietHo__ID_Di__628FA481">
+          <AssociationSet Name="FK__ChiTietHo__ID_Di__6383C8BA" Association="Self.FK__ChiTietHo__ID_Di__6383C8BA">
             <End Role="DichVuPhuThu" EntitySet="DichVuPhuThus" />
             <End Role="ChiTietHoaDon" EntitySet="ChiTietHoaDons" />
           </AssociationSet>
-          <AssociationSet Name="FK__ChiTietHo__ID_Th__619B8048" Association="Self.FK__ChiTietHo__ID_Th__619B8048">
+          <AssociationSet Name="FK__ChiTietHo__ID_Th__628FA481" Association="Self.FK__ChiTietHo__ID_Th__628FA481">
             <End Role="ThanhToan" EntitySet="ThanhToans" />
             <End Role="ChiTietHoaDon" EntitySet="ChiTietHoaDons" />
           </AssociationSet>
-          <AssociationSet Name="FK__DichVuPhu__ID_Tr__52593CB8" Association="Self.FK__DichVuPhu__ID_Tr__52593CB8">
+          <AssociationSet Name="FK__DichVuPhu__ID_Tr__534D60F1" Association="Self.FK__DichVuPhu__ID_Tr__534D60F1">
             <End Role="Trang_Thai" EntitySet="Trang_Thai" />
             <End Role="DichVuPhuThu" EntitySet="DichVuPhuThus" />
           </AssociationSet>
-          <AssociationSet Name="FK__YeuCauDic__ID_Di__571DF1D5" Association="Self.FK__YeuCauDic__ID_Di__571DF1D5">
+          <AssociationSet Name="FK__YeuCauDic__ID_Di__5812160E" Association="Self.FK__YeuCauDic__ID_Di__5812160E">
             <End Role="DichVuPhuThu" EntitySet="DichVuPhuThus" />
             <End Role="YeuCauDichVu" EntitySet="YeuCauDichVus" />
           </AssociationSet>
@@ -949,10 +899,6 @@
             <End Role="Room" EntitySet="Rooms" />
             <End Role="Phong_TienIch" EntitySet="Phong_TienIch" />
           </AssociationSet>
-          <AssociationSet Name="FK_Phong_TienIch_MaPhong" Association="Self.FK_Phong_TienIch_MaPhong">
-            <End Role="Room" EntitySet="Rooms" />
-            <End Role="Phong_TienIch" EntitySet="Phong_TienIch" />
-          </AssociationSet>
           <AssociationSet Name="FK__Users__ID_Role__3A81B327" Association="Self.FK__Users__ID_Role__3A81B327">
             <End Role="Role" EntitySet="Roles" />
             <End Role="Users" EntitySet="Users" />
@@ -961,11 +907,11 @@
             <End Role="Trang_Thai" EntitySet="Trang_Thai" />
             <End Role="Room" EntitySet="Rooms" />
           </AssociationSet>
-          <AssociationSet Name="FK__ThanhToan__ID_Tr__5CD6CB2B" Association="Self.FK__ThanhToan__ID_Tr__5CD6CB2B">
+          <AssociationSet Name="FK__ThanhToan__ID_Tr__5DCAEF64" Association="Self.FK__ThanhToan__ID_Tr__5DCAEF64">
             <End Role="Trang_Thai" EntitySet="Trang_Thai" />
             <End Role="ThanhToan" EntitySet="ThanhToans" />
           </AssociationSet>
-          <AssociationSet Name="FK__YeuCauDic__ID_Tr__5812160E" Association="Self.FK__YeuCauDic__ID_Tr__5812160E">
+          <AssociationSet Name="FK__YeuCauDic__ID_Tr__59063A47" Association="Self.FK__YeuCauDic__ID_Tr__59063A47">
             <End Role="Trang_Thai" EntitySet="Trang_Thai" />
             <End Role="YeuCauDichVu" EntitySet="YeuCauDichVus" />
           </AssociationSet>
@@ -1067,17 +1013,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="CNPM_Model.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ThanhToans">
             <EntityTypeMapping TypeName="CNPM_Model.ThanhToan">
               <MappingFragment StoreEntitySet="ThanhToan">
@@ -1087,6 +1022,7 @@
                 <ScalarProperty Name="ThoiGianThanhToan" ColumnName="ThoiGianThanhToan" />
                 <ScalarProperty Name="NoiDungThanhToan" ColumnName="NoiDungThanhToan" />
                 <ScalarProperty Name="ID_Trang_Thai" ColumnName="ID_Trang_Thai" />
+                <ScalarProperty Name="AnhThanhToan" ColumnName="AnhThanhToan" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

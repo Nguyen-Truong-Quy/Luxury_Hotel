@@ -1,5 +1,4 @@
 ﻿@{
-    // Đảm bảo tiêu đề và layout được thiết lập đúng
     ViewBag.Title = "Danh sách đơn đặt phòng";
     Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
 }
@@ -10,7 +9,7 @@
     <h2 class="mb-4 text-primary text-center">📋 Lịch sử Đặt phòng của bạn</h2>
     <hr class="mb-4" />
 
-    @* Hiển thị thông báo từ TempData nếu có *@
+    @* Thông báo từ TempData *@
     @if (TempData["Error"] != null)
     {
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -26,16 +25,16 @@
         </div>
     }
 
-    @* Hiển thị User ID (chỉ để debug, có thể xóa sau) *@
-    <p class="text-muted text-center mb-4">Đang hiển thị đơn đặt phòng cho User ID: <span class="fw-bold">@ViewBag.Debug_UserId</span></p>
+    <p class="text-muted text-center mb-4">
+        Đang hiển thị đơn đặt phòng cho User ID:
+        <span class="fw-bold">@ViewBag.Debug_UserId</span>
+    </p>
 
-
-    @if (Model != null && Model.Any())
+    @if (Model != null && Model.Bookings != null && Model.Bookings.Any())
     {
         <div class="table-responsive">
-            @* Giúp bảng cuộn trên màn hình nhỏ *@
             <table class="table table-bordered table-striped table-hover shadow-sm caption-top">
-                <caption>Tổng số đơn đặt phòng: @Model.Count()</caption>
+                <caption>Tổng số đơn đặt phòng: @Model.Bookings.Count()</caption>
                 <thead class="table-dark">
                     <tr>
                         <th scope="col">Mã Booking</th>
@@ -48,12 +47,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var booking in Model)
+                    @foreach (var booking in Model.Bookings)
                     {
                         <tr>
-                            <td>
-                                <span class="fw-bold text-primary">@booking.BookingID</span>
-                            </td>
+                            <td><span class="fw-bold text-primary">@booking.BookingID</span></td>
                             <td>
                                 @booking.Room?.Ten_Phong <br />
                                 <small class="text-muted">(@booking.Ma_Phong)</small>
@@ -91,12 +88,6 @@
                                 <a href="@Url.Action("XacNhan", "Booking", new { id = booking.BookingID })" class="btn btn-sm btn-outline-primary" title="Xem chi tiết">
                                     <i class="fas fa-info-circle"></i> Chi tiết
                                 </a>
-                                @* Thêm các nút hành động khác nếu cần (ví dụ: hủy, sửa) *@
-                                @*
-                                    <a href="#" class="btn btn-sm btn-outline-danger ms-2" title="Hủy đặt phòng">
-                                        <i class="fas fa-times-circle"></i> Hủy
-                                    </a>
-                                *@
                             </td>
                         </tr>
                     }
@@ -115,14 +106,15 @@
     }
 
     <div class="mt-4 text-center">
-        <a href="@Url.Action("Index", "Home")" class="btn btn-secondary"><i class="fas fa-home"></i> Quay lại trang chủ</a>
+        <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">
+            <i class="fas fa-home"></i> Quay lại trang chủ
+        </a>
     </div>
 </div>
 
 @section scripts {
-    @* Đảm bảo đã nhúng Font Awesome cho các icon *@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script>
-        // Có thể thêm JS ở đây nếu cần cho các hiệu ứng UI
+        // Add custom JS here if needed
     </script>
 }

@@ -20,6 +20,5 @@ namespace CNPM_Luxury.Model
     
         public virtual TienIch TienIch { get; set; }
         public virtual Room Room { get; set; }
-        public virtual Room Room1 { get; set; }
     }
 }

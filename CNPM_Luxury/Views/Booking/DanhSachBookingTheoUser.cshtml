@@ -1,0 +1,54 @@
+﻿@model CNPM_Luxury.ViewModel.BookingListViewModel
+
+@{
+    ViewBag.Title = "Danh sách đặt phòng";
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-primary">📋 Danh sách đặt phòng</h2>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    @if (Model == null || Model.Bookings == null || !Model.Bookings.Any())
+    {
+        <p>Không có đơn đặt phòng nào được tìm thấy.</p>
+    }
+    else
+    {
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Mã Booking</th>
+                    <th>Tên phòng</th>
+                    <th>Ngày nhận</th>
+                    <th>Ngày trả</th>
+                    <th>Trạng thái</th>
+                    <th>Chi tiết</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var booking in Model.Bookings)
+                {
+                    <tr>
+                        <td>@booking.BookingID</td>
+                        <td>@booking.Room?.Ten_Phong</td>
+                        <td>@booking.CheckInDate?.ToString("dd/MM/yyyy")</td>
+                        <td>@booking.CheckOutDate?.ToString("dd/MM/yyyy")</td>
+                        <td>@booking.Trang_Thai?.Ten_Trang_Thai</td>
+                        <td>
+                            <a class="btn btn-sm btn-info" href="@Url.Action("XacNhan", "Booking", new { id = booking.BookingID })">Xem</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    <div class="mt-3">
+        <a class="btn btn-secondary" href="@Url.Action("TimKiemBooking", "Booking")">🔙 Quay lại Tìm kiếm</a>
+    </div>
+</div>
